@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { startTransition } from 'react'
+import { Link } from 'react-router-dom'
 import Platform from '../PlatForm/Platform';
 import ChatPage from '../ChatPage/ChatPage';
 import Featuers from '../Features/Featuers';
@@ -11,6 +12,10 @@ import right from '../../assets/right.png';
 import profile from '../../assets/chatProfile.jpg';
 import content2 from '../../assets/content3img.png';
 import content1 from '../../assets/content3img1.png';
+import tri3 from '../../assets/triangle3.png';
+import UU from '../../assets/UU.png';
+import orange from '../../assets/orangeBg.png';
+import blue from '../../assets/blueBg.png';
 
 const LandingPage = () => {
     return (
@@ -25,26 +30,39 @@ const LandingPage = () => {
                         </div>
                     </div>
                     <div className={style.rightNav}>
-                        <button className={style.NavLogin}>Sign in</button>
+                        <Link to={'/login'} className={style.NavLogin}>Sign in</Link>
                         <button className={style.NavCreate}>Create a FormBot</button>
                     </div>
                 </div>
                 {/* content1 */}
                 <div className={style.Content1}>
                     <div className={style.InnerContent1}>
-                        <div className={style.content1Hading}>
-                            <h1>Build advanced chatbots <br /> visually</h1>
+                        <img src={tri3} alt="" />
+
+                        <div className={style.InnerHeading}>
+                            <div className={style.content1Hading}>
+                                <h1>Build advanced chatbots <br /> visually</h1>
+                            </div>
+                            <div className={style.content1Para}>
+                                <p>Typebot gives you powerful blocks to create unique chat experiences. Embed them
+                                    anywhere on your web/mobile apps and start collecting results like magic.</p>
+                            </div>
+                            <div className={style.content1Btn}>
+                                <button>Create a FormBot  for free</button>
+                            </div>
                         </div>
-                        <div className={style.content1Para}>
-                            <p>Typebot gives you powerful blocks to create unique chat experiences. Embed them
-                                anywhere on your web/mobile apps and start collecting results like magic.</p>
-                        </div>
-                        <div className={style.content1Btn}>
-                            <button>Create a FormBot  for free</button>
-                        </div>
+                        <img src={UU} alt="" />
+
                     </div>
-                    <div className={style.content1Image}>
-                        <img src={image} alt="Image" />
+                    <div className={style.ParentImg}>
+                        <div className={style.BackgroundImg1}>
+                            <img src={orange} alt="" />
+                            <img src={blue} alt="" />
+                        </div>
+                        <div className={style.content1Image}>
+                            <img src={image} alt="Image" />
+                        </div>
+
                     </div>
                 </div>
 
@@ -83,12 +101,26 @@ const LandingPage = () => {
                                         <input type="email" placeholder="Email" />
                                     </div>
 
-                                    <h4>What services are you interested in? <span>*</span></h4>
-                                    <div className={style.checkbox_group}>
-                                        <label><input type="checkbox" /> Website Dev</label>
-                                        <label><input type="checkbox" /> Content Marketing</label>
-                                        <label><input type="checkbox" /> Social Media</label>
-                                        <label><input type="checkbox" /> UX/UI Design</label>
+                                    <div className={style.CheckBoxes}>
+                                        <h2>
+                                            What services are you interested in? <span>*</span>
+                                        </h2>
+                                        <div className={style.checkbox}>
+                                            <input type="checkbox" id="webdev" className={style.check} required />
+                                            <label htmlFor="webdev">Website Dev</label>
+                                        </div>
+                                        <div className={style.checkbox}>
+                                            <input type="checkbox" required className={style.check} />
+                                            <label>Content Marketing</label>
+                                        </div>
+                                        <div className={style.checkbox}>
+                                            <input type="checkbox" required className={style.check} />
+                                            <label>Social Media</label>
+                                        </div>
+                                        <div className={style.checkbox}>
+                                            <input type="checkbox" required className={style.check} />
+                                            <label>UX/UI Design</label>
+                                        </div>
                                     </div>
                                     <div className={style.FormContent_textarea}>
                                         <h4>Additional Information <span>*</span></h4>
@@ -154,17 +186,72 @@ const LandingPage = () => {
 
             {/* container 5 */}
             <div className={style.container5}>
-                <Platform/>
+                <Platform />
             </div>
 
             {/* container 6 */}
             <div className={style.container6}>
-            <ChatPage/>
+                <ChatPage />
             </div>
 
             {/* container 7 */}
             <div className={style.container7}>
-                <Featuers/>
+                <Featuers />
+            </div>
+
+            {/* container 8 */}
+            <div className={style.container8}>
+
+                <div className={style.InnerContainer8}>
+                    <div className={style.backgroundTri}>
+                        <img src={tri3} alt="triangle" />
+                    </div>
+                    <div className={style.UserEngagement}>
+                        <h1>Improve conversion and user engagement
+                            with FormBots </h1>
+                        <div className={style.userBtn}>
+                            <button>Create a FormBot </button>
+                        </div>
+                        <p>No trial. Generous <b>free</b> plan.</p>
+                    </div>
+                    <div className={style.backgroundUU}>
+                        <img src={UU} alt="" />
+                    </div>
+                </div>
+
+            </div>
+
+            {/* container 9 */}
+
+            <div className={style.footer}>
+                <div className={style.cuvette}>
+                    <p>Made with ❤️ by @kumar</p>
+                </div>
+                <div className={style.footer_flex}>
+                    <div className={style.FooterLinks}>
+                        <Link to="#">status <i className="fa">&#xf08e;</i></Link>
+                        <Link to="#">Documentation <i className="fa">&#xf08e;</i></Link>
+                        <Link to="#">Roadmap <i className="fa">&#xf08e;</i></Link>
+                        <Link to="#">Pricing</Link>
+                    </div>
+                </div>
+                <div className={style.footer_flex}>
+                    <div className={style.FooterLinks}>
+                        <Link to="#">Discord <i className="fa">&#xf08e;</i> </Link>
+                        <Link to="#">GitHub repository <i className="fa">&#xf08e;</i></Link>
+                        <Link to="#">Twitter <i className="fa">&#xf08e;</i></Link>
+                        <Link to="#">LinkedIn <i className="fa">&#xf08e;</i></Link>
+                        <Link to="#">OSS Friends</Link>
+                    </div>
+                </div>
+                <div className={style.footer_flex}>
+                    <div className={style.FooterLinks}>
+                        <Link to="#">About </Link>
+                        <Link to="#">Contact </Link>
+                        <Link to="#">Terms of Service</Link>
+                        <Link to="#">Privacy Policy </Link>
+                    </div>
+                </div>
             </div>
         </>
     )

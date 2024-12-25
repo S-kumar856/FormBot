@@ -5,13 +5,15 @@
   justify-content: end;
   gap: 30px;
   height: 42vw;
-  /* background: radial-gradient(transparent 50%, black); */
+  box-shadow: 0 0  200px 0 rgba(0,0,0,2) inset;
+ 
 }
 
 .sub_Platform1 {
   display: flex;
   justify-content: space-between;
   margin: 15px;
+  
 }
 
 .plortFormBoxes {

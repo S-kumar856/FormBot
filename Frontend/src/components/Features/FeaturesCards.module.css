@@ -8,15 +8,34 @@
 
 }
 
+.flex_cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;   
+    
+}
+
 .icons{
     width: 3vw;
     height: 3vw;
     background-color: #0042DA;
     border-radius: 8px;
-    /* z-index:auto; */
     position: relative;
     top: 10%;
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icons i{
+    color: white;
+}
+
+.flex_icon{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .Boxes{
     /* border: 1px solid white; */
@@ -42,3 +61,5 @@
     font-weight: 400;
     text-align: center;
 }
+
+

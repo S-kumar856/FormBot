@@ -1,10 +1,14 @@
 body{
     background: linear-gradient(#121212, #171923, #171923);  
+    width: 100vw;
+    height: 100%;
+    max-width: 100%;
 }
 
 .MainContainer{
-    width: 100%;
+    width: 100vw;
     height: 100%;
+    max-width: 100%;
 }
 
 /* ------- Navbar -------- */
@@ -32,13 +36,17 @@ body{
     font-size: 1rem;
     font-style: bold;
     font-family: poppins;
-    /* color: #ffffff; */
 }
 
 .rightNav{
     display: flex;
     gap: 15px;
 }
+.rightNav a{
+    text-decoration: none;
+    font-family: Open sans;
+}
+
 
 .NavLogin{
     font-size: 1rem;
@@ -86,9 +94,10 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    /* flex-direction: column; */
     position: relative;
     top:12vh;
+    max-width: 100%;
 }
 
 .content1Hading {
@@ -99,6 +108,17 @@ body{
     background:linear-gradient(#4B83FF, #B794F4);
     -webkit-background-clip: text;
     color: transparent;
+}
+.InnerHeading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 60vw;
+}
+
+.InnerContent1 img{
+    width: 20vw;
 }
 
 .content1Para{
@@ -124,8 +144,32 @@ body{
     cursor: pointer;
 }
 
-.content1Imagep{
+.content1Image{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    top: -55px;
+    z-index: 9;
     text-align: center;
+    margin-top: 100px;
+}
+
+.ParentImg{
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    max-width: 100%;
+    margin-bottom: 120px;
+}
+.BackgroundImg1{
+    max-width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    display: flex;
+    z-index: 0;
 }
 
 /* ------- Content2 -------- */
@@ -204,20 +248,43 @@ body{
     color: #FC8181;
 }
 
-.checkbox_group{
-    /* display: flex;
-    flex-direction: column;
-    background-color: red; */
-}
+/* Checkboxes */
 
-.checkbox_group input{
+
   
+.CheckBoxes h2 {
+    font-size: 1rem;
+    font-family: Open sans;
+    font-weight:400;
+    margin-bottom: 10px;
+  }
+  
+.CheckBoxes h2 span {
+    color: #FC8181;
 }
 
-.checkbox_group label{
-    /* display: flex; */
+.checkbox{
+    /* background-color: red; */
+    display: flex;
+    text-align: left;
+    justify-content: center;
+    width: 50%;
+    gap: 10px;
+    margin-bottom: 10px;
+  
 
 }
+.checkbox input[type=checkbox]{
+    content: "";
+    height: 2.5vh;
+}
+
+.checkbox label{
+    width: 100vw;
+}
+  
+
+  
 
 .FormContent_textarea{
     margin-top: 20px;
@@ -406,9 +473,102 @@ body{
     font-weight: 400;
 }
 
-/* container5 */
+/* container8 */
 
-/* .container5{
-    height: 656px;
-    margin-top: 30px;
-} */
+.container8{
+    height: 100vh; 
+}
+
+.InnerContainer8{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130vh;
+
+}
+.backgroundTri{
+    position: relative;
+    bottom: 28%;
+    right: 8%;
+}
+
+.backgroundUU{
+    position: relative;
+    left: 5%;
+}
+
+.UserEngagement{
+    width: 43%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.UserEngagement h1{
+    color: #FFFFFFEB;
+    font-family: Outfit;
+    font-weight: 700;
+    font-size: 2rem;
+}
+.userBtn button{
+    background-color: #1A5FFF;
+    color: #FFFFFFEB;
+    border-radius: 6px;
+    padding: 21px 24px;
+    font-size: 1rem;
+    font-family: Open sans;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.userBtn button:hover{
+    background-color: #485165;
+}
+
+.UserEngagement p{
+    color: #A0AEC0;
+    font-family: Open sans;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+}
+
+.container8 img{
+   float: right;
+}
+
+/* footer */
+.footer{
+    height:30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8vw;
+    color: #FFFFFFEB;
+    background-color: #121212;
+}
+
+.FooterLinks{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.FooterLinks a{
+    display: flex;
+    gap: 5px;
+    color: #FFFFFFEB;
+    font-family: Open sans;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.cuvette p{
+    color: #FFFFFFEB;
+    font-family: Open sans;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+
+
