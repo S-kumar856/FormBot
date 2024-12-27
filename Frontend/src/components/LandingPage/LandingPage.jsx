@@ -150,7 +150,7 @@ const LandingPage = () => {
                     </div>
 
                 </div>
-            </div>
+            
 
             {/* content 3 */}
             <div className={style.container3}>
@@ -252,6 +252,7 @@ const LandingPage = () => {
                         <Link to="#">Privacy Policy </Link>
                     </div>
                 </div>
+            </div>
             </div>
         </>
     )

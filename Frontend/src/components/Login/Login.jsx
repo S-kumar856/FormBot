@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import style from '../Register/Register.module.css';
 import { userLogin } from '../../../services';
 import { toast } from 'react-toastify';
@@ -9,19 +9,19 @@ import Polygon2 from '../../assets/Polygon2.png';
 
 
 const Login = () => {
-
+  const navigate = useNavigate();
   const [loginForm, setLoginForm] = useState({
 
     email: '',
     password: '',
 
   })
-  const handleRegister = (e) => {
+  const handleLogin = (e) => {
     const { name, value } = e.target;
     setLoginForm({ ...loginForm, [name]: value })
   }
 
-  const handleRegisterSubmit = async (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await userLogin(loginForm);
@@ -45,15 +45,16 @@ const Login = () => {
       console.log(error);
 
     }
-    console.log(loginForm);
   }
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if(token){
       toast.success("User Already Logged In");
+      navigate('/Formdashboard')
     }
   },[])
+
   return (
     <>
       <div className={style.register}>
@@ -66,14 +67,14 @@ const Login = () => {
           <Link to={'/'}><i className="fa-solid fa-arrow-left"></i></Link>
         </div>
 
-        <form onSubmit={handleRegisterSubmit} className={style.registerForm}>
+        <form onSubmit={handleLoginSubmit} className={style.registerForm}>
 
           <div className={style.registerInput}>
             <label >Email:</label><br />
             <input type="email"
               id="email"
               value={loginForm.email}
-              onChange={handleRegister}
+              onChange={handleLogin}
               name="email"
               placeholder='Enter Email' required
 
@@ -84,7 +85,7 @@ const Login = () => {
             <input type="password"
               id="password"
               value={loginForm.password}
-              onChange={handleRegister}
+              onChange={handleLogin}
               name="password"
               placeholder='Enter Password' required
 

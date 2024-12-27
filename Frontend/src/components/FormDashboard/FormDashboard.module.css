@@ -1,0 +1,316 @@
+.Main_Container{
+    width: 100vw;
+    height: 100%;
+    max-width: 100%;                                 
+    background: linear-gradient(#121212, #171923, #171923);  
+}
+
+.workspace_Navbar{
+    display: flex;
+    justify-content: center;
+    height: 8vh;
+    padding: 10px;
+    border-bottom: 2px solid rgb(57, 56, 56);
+}
+
+.navbar{
+    width: 60vw;
+    display: flex;
+    justify-content: end;
+ 
+}
+.NavShare{
+    width: 40vw;
+    display: flex;
+    justify-content: end;
+    gap: 80px;
+}
+.dark{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.dark{
+    font-family: Open sans;
+    font-size: 1rem;
+    color: #FFFFFFEB;
+}
+
+
+
+/* lgiht&dark Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+
+  /* share button */
+.share{
+    margin-right: 30px;
+}
+.share button{
+    background-color: #1A5FFF;
+    color: #FFFFFFEB;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-family: Open sans;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+}
+.share button:hover{
+    background-color: #4563a8;
+}
+
+/* select drop down */
+.workspace_Navbar select{
+    background-color: transparent;
+    border-radius: 6px;
+    width: 14vw;
+    color: #FFFFFFEB;
+    font-family: Open sans;
+    font-weight: 600;
+    font-size: 1rem;
+}
+option{
+    background-color: #121212;
+}
+.logout{
+    color: #FFA54C;
+}
+
+/* creating folder */
+
+.Main_Createrfolder{
+    position: relative;
+}
+.Ineercreate_folder{
+    position: absolute;
+    max-width: 100%;
+    
+}
+.Create_Folder{
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
+    padding-left: 250px;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 0;
+    background: linear-gradient(#121212, #171923, #171923);  
+
+
+}
+
+.Folder{
+    display: flex;
+    gap: 10px;
+}
+.Folder span{
+    padding: 10px;
+    background-color: rgb(48, 47, 47);
+    color: #FFFFFFEB;
+    border-radius: 6px;
+    font-family: Open sans;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* creating folder file */
+
+.Folder_File{
+    border: none;
+    width: 13vw;
+    height: 15vw;
+    color: #FFFFFFEB;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7vh;
+    background-color: #1A5FFF;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.Folder_File span{
+    font-size: 2.9rem;
+    font-weight: 600;
+}
+.Folder_File  p{
+    font-family: Open sans;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.Folder_File:hover{
+    background-color: #4563a8;
+}
+
+/* share email model */
+
+.Share_Model{
+    width: 100%;
+    /* max-width: 100%; */
+    position: relative;
+    
+    
+}
+.inner_shareModel{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+
+}
+
+.inner_shareModel form{
+    border: 1px solid rgb(70, 68, 68);
+    width: 50vw;  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 30px 70px 30px;
+    border-radius: 24px;
+    background-color: #121212;
+
+}
+.shareModel_mail{
+    margin-top: 5vh;
+}
+.shareModel_mail label{
+    font-size: 2rem;
+    font-family: Open sans;
+    font-weight: 600;
+    display: flex;
+    justify-content:space-between;
+    color: #FFFFFFEB;
+    margin-bottom: 20px;
+}
+.shareModel_mail label select{ 
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #FFFFFFEB;
+    font-family: Open sans;
+    font-size: 1rem;
+
+}
+
+.shareModel_mail input{
+    font-family: Open sans;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 15px;
+    background-color: rgb(48, 47, 47);
+    margin-bottom: 5vh;
+    border: none;
+    outline: none;
+    /* width: 40vw;  */
+}
+
+.inner_shareModel button{
+    background-color: #1A5FFF;
+    font-family: Poppins;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 8px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    color: #FFFFFFEB;
+    margin-bottom: 3vh;
+    cursor: pointer;
+}
+.inner_shareModel button:hover{
+    background-color: #6382c8;
+}
+.inner_shareModel p{
+    font-size: 2rem;
+    font-family: Open sans;
+    font-weight: 600;
+    color: #FFFFFFEB;
+    margin-bottom: 3vh;
+}
+
+.Sharemodel_Cross{
+    display: flex;
+    justify-content: end;
+}
+.Sharemodel_Cross span{
+    background-color: transparent;
+    color: #F55050; 
+    font-size: 1.5rem;
+    font-family: Open sans;
+    cursor: pointer;
+}
+
+
+
+
+
+
