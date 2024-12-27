@@ -1,6 +1,6 @@
 .Main_Container{
     width: 100vw;
-    height: 100%;
+    height: 100vh;
     max-width: 100%;                                 
     background: linear-gradient(#121212, #171923, #171923);  
 }
@@ -8,7 +8,7 @@
 .workspace_Navbar{
     display: flex;
     justify-content: center;
-    height: 8vh;
+  
     padding: 10px;
     border-bottom: 2px solid rgb(57, 56, 56);
 }
@@ -29,13 +29,10 @@
     display: flex;
     align-items: center;
     gap: 5px;
-}
-.dark{
     font-family: Open sans;
     font-size: 1rem;
     color: #FFFFFFEB;
 }
-
 
 
 /* lgiht&dark Switch */
@@ -148,14 +145,14 @@ option{
     
 }
 .Create_Folder{
-    width: 100vw;
+    /* width: 100vw;
     max-width: 100%;
-    height: 100vh;
+    height: 100vh; */
     padding-left: 250px;
     padding-top: 30px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 30px;
     z-index: 0;
     background: linear-gradient(#121212, #171923, #171923);  
 
@@ -164,7 +161,7 @@ option{
 
 .Folder{
     display: flex;
-    gap: 10px;
+    gap: 20px;
 }
 .Folder span{
     padding: 10px;
@@ -178,6 +175,22 @@ option{
     gap: 10px;
     align-items: center;
     cursor: pointer;
+}
+.New_folder{
+    padding: 10px;
+    background-color: rgb(48, 47, 47);
+    color: #FFFFFFEB;
+    border-radius: 6px;
+    font-family: Open sans;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+}
+.New_folder i{
+    color: #F55050;
 }
 
 /* creating folder file */
@@ -307,6 +320,92 @@ option{
     font-size: 1.5rem;
     font-family: Open sans;
     cursor: pointer;
+}
+
+/* ------------create folder modal----------------------- */
+
+.Create_folder_modal{
+    padding: 30px;
+    width: 30vw;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #18181B;
+    position: absolute;
+    top: 15vh;
+    left: 31vw;
+    box-shadow: 0px 0px 3px 0px grey;
+
+   }
+
+
+.Create_folder_modalContent form{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+}
+
+.Create_folder_modalInput{
+    padding: 15px;
+    font-family: Open sans;
+    font-weight: 500;
+    background-color: #1F1F23;
+    border: none;
+    outline: none;
+}
+
+.Create_folder_modalContent h3{
+    color: #FFFFFFEB;
+    font-family: Open sans;
+    font-size: 1.5rem;
+    font-weight: 600;
+    /* margin-bottom: 20px; */
+}
+.Create_folder_modalActions{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* gap: 10vh; */
+}
+
+.doneButton{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-family: Open sans;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #4B83FF;
+}
+.cancelButton{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-family: Open sans;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #FFFFFFEB;
+}
+.line{
+    font-size: 2rem;
+    color: #47474A;
+}
+
+/* create delete model */
+.Create_delete_modal{
+    padding: 30px;
+    width: 25vw;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #18181B;
+    position: absolute;
+    top: 15vh;
+    left: 31vw;
+    box-shadow: 0px 0px 3px 0px grey;
+    text-align: center;
 }
 
 

@@ -1,0 +1,161 @@
+.Workspace_Main_Container{
+    width: 100%;
+    height: 100vh;
+    background-color: #1F1F23;
+}
+
+.Workspace_Navbar{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #18181B;
+    color:#FFFFFFEB;
+}
+.Workspace_Theme{
+    display: flex;
+    align-items: center;
+    gap: 1.2vw;
+}
+.Workspace_NavbarBtns{
+    display: flex;
+    align-items: center;
+    gap: 4vw;
+}
+.Workspace_input input{
+    background-color: #37373E;
+    border: none;
+    height: 4vh;
+    padding: 5px 20px;
+}
+.Workspace_flowbtn{
+    color: #7EA6FF;
+    border: 1px solid #7EA6FF;
+    background-color: transparent;
+    padding: 6px 8px;
+    text-align: center;
+    border-radius: 6px;
+    box-shadow: 0px 0px 3px 0 #7EA6FF;
+    cursor: pointer;
+}
+
+.Workspace_Responsebtn{
+    font-family: Open sans;
+    font-weight: 600;
+    font-size: 0.9rem;
+    background-color: transparent;
+    border: none;
+    outline:none;
+    color: #FFFFFFEB;
+    cursor: pointer;
+}
+
+/* dark and light */
+.dark{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: Open sans;
+    font-size: 1rem;
+    color: #FFFFFFEB;
+}
+
+/* lgiht&dark Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  /* share and save buttons */
+.Workspace_NavbarButton{
+    display: flex;
+    gap: 1vw;
+}
+.Workspace_shareBtn{
+    font-family: Open sans;
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: 5px 8px;
+    border-radius: 4px;
+    color: #FFFFFF;
+    background-color: #848890;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.Workspace_saveBtn{
+    font-family: Open sans;
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: 5px 8px;
+    border-radius: 4px;
+    color: #FFFFFF;
+    background-color: #4ADE80CC;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.Workspace_XBtn{
+    background-color: transparent;
+    color: #F55050;
+    font-size: 1.5rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
