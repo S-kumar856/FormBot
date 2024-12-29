@@ -4,9 +4,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import './index.css';
 import App from './App.jsx';
+import { ThemeProvider } from './components/theme-context';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 createRoot(document.getElementById('root')).render(
+    <ThemeProvider>
     <BrowserRouter>
         <App />
         <ToastContainer
@@ -22,5 +24,6 @@ createRoot(document.getElementById('root')).render(
         theme="colored"
         transition:Bounce/>
     </BrowserRouter>
+    </ThemeProvider>
 
 )

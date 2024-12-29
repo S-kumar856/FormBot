@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import style from './FormDashboard.module.css'
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../theme-context';
 
 const FormDashboard = () => {
     const navigate = useNavigate();
     const [boolean, setBoolean] = useState(false);
     const [createShowModal, setCreateShowModal] = useState(false);
-    const [confirmDeleteModel, setConfirmDeleteModel] = useState(false)
     const [folderToDelete, setFolderToDelete] = useState(null);
-
+    const [confirmDeleteModel, setConfirmDeleteModel] = useState(false);
+    const [confirmDeleteFormModel, setConfirmDeleteFormModel] = useState(false);
+    const [NewFormToDelete, setNewFormToDelete] = useState(null);
     const [createInput, setCreateInput] = useState('')
     const [createFolders, setCreateFolders] = useState([]);
+    const [newForm, setNewForm] = useState([])
+
+    const { theme, toggleTheme } = useTheme();
+    console.log(theme)
 
     // targeting the input
     const handleInputChange = (e) => {
@@ -25,8 +31,12 @@ const FormDashboard = () => {
     const handleFolderClick = (index) => {
         setFolderToDelete(index);
         setConfirmDeleteModel(true);
+        setNewFormToDelete(index);
+        setConfirmDeleteFormModel(true)
+
     };
 
+    // function to delete folder
     const handleConfirmDelete = () => {
         if (folderToDelete !== null) {
               // Create a new array excluding the folder at the specified index
@@ -36,16 +46,27 @@ const FormDashboard = () => {
         }
         setConfirmDeleteModel(false);
     };
-// cancling the confirm modal funciton
+
+    // function to delete newform 
+    const handleNewFormDelete = () => {
+        if (NewFormToDelete !== null) {
+              // Create a new array excluding the folder at the specified index
+            const updatedFolders = createFolders.filter((_, i) => i !== NewFormToDelete);
+            setNewForm(updatedFolders);// Update the state
+            setNewFormToDelete(null); // update again to null
+        }
+        setConfirmDeleteFormModel(false);
+    };
+
+
+// function for cancling the confirm modal funciton
     const handleCancelDelete = () => {
         setFolderToDelete(null);
         setConfirmDeleteModel(false);
+        setNewFormToDelete(null);
+        setConfirmDeleteFormModel(false);
       };
 
-    // const handleDelete = (index) => {
-    //     const updatedFolders = createFolders.filter((_, i) => i !== index);
-    //     setCreateFolders(updatedFolders); 
-    // };
 
     //   handling the data
     const handleCreateFolderDone = (e) => {
@@ -55,6 +76,11 @@ const FormDashboard = () => {
             setCreateInput('');
         }
         setCreateShowModal(false);
+    }
+
+    // function for stroing multiple newform
+    const createNewForm = () =>{
+        setNewForm([...newForm, newForm])
     }
 
 
@@ -74,7 +100,10 @@ const FormDashboard = () => {
                         <div className={style.dark}>
                             <p>Light</p>
                             <label className={style.switch}>
-                                <input type="checkbox" />
+                                <input type="checkbox" 
+                                    onChange={toggleTheme}
+                                    checked={theme =='dark'}
+                                />
                                 <span className={`${style.slider} ${style.round}`}></span>
                             </label>
                             <p>Dark</p>
@@ -97,10 +126,20 @@ const FormDashboard = () => {
                                     </div>
                                 ))}
                             </div>
-
-                            <div className={style.Folder_File} onClick={()=> navigate('/workspace')}>
+                            <div className={style.Folder_Form}>
+                            <div className={style.Folder_File} onClick={createNewForm}> {/*  */}
                                 <span>+</span>
                                 <p>Create a typebot</p>
+                            </div>
+                           
+                            {newForm.map((form,index)=>(
+                                <div key={index} className={style.New_folderForm}>  {/*  onClick={()=> navigate('/workspace')} */}
+                                <i className="fa-solid fa-trash-can" onClick={() => handleFolderClick(index)}></i>
+                                
+                                    {form}
+                                    <h3>New form</h3>
+                                </div>
+                            ))}
                             </div>
                         </div>
                     </div>
@@ -166,6 +205,23 @@ const FormDashboard = () => {
                                     <button className={style.cancelButton} onClick={handleCancelDelete} >Cancel</button>
                                 </div>
 
+                            </div>
+                        </div>
+                    )}
+
+
+                    {/* confirm Delete newform model */}
+                    {confirmDeleteFormModel && (
+                        <div className={style.Create_delete_modal}>
+                            <div className={style.Create_folder_modalContent}>
+                                <h3>Are you sure you want to 
+                                delete this Form ?</h3>
+
+                                <div className={style.Create_folder_modalActions}>
+                                    <button className={style.doneButton} onClick={handleNewFormDelete} >Confirm</button>
+                                    <span className={style.line}>|</span>
+                                    <button className={style.cancelButton} onClick={handleCancelDelete} >Cancel</button>
+                                </div>
                             </div>
                         </div>
                     )}

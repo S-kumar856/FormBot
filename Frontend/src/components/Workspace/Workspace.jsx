@@ -1,7 +1,9 @@
 import React from 'react';
 import style from './Workspace.module.css'
+import { useTheme } from '../theme-context';
 
 const Workspace = () => {
+    const { theme, toggleTheme } = useTheme();
     return (
         <>
             <div className={style.Workspace_Main_Container}>
@@ -18,7 +20,10 @@ const Workspace = () => {
                         <div className={style.dark}>
                             <p>Light</p>
                             <label className={style.switch}>
-                                <input type="checkbox" />
+                                <input type="checkbox" 
+                                    onChange={toggleTheme}
+                                    checked={theme === 'dark'}
+                                />
                                 <span className={`${style.slider} ${style.round}`}></span>
                             </label>
                             <p>Dark</p>

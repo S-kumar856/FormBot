@@ -1,14 +1,24 @@
+[data-theme="light"]{
+    --bg-color:#ffffff;
+    --text-color:#000000;
+}
+
+[data-theme="dark"]{
+    --bg-color : linear-gradient(#121212, #171923, #171923);
+    --text-color:#FFFFFFEB;
+}
+
 .Main_Container{
     width: 100vw;
     height: 100vh;
-    max-width: 100%;                                 
-    background: linear-gradient(#121212, #171923, #171923);  
+    max-width: 100%;               
+    background: var(--bg-color);
+    color: var(--text-color);                  
 }
 
 .workspace_Navbar{
     display: flex;
     justify-content: center;
-  
     padding: 10px;
     border-bottom: 2px solid rgb(57, 56, 56);
 }
@@ -122,7 +132,7 @@
     background-color: transparent;
     border-radius: 6px;
     width: 14vw;
-    color: #FFFFFFEB;
+    color: var(--text-color); 
     font-family: Open sans;
     font-weight: 600;
     font-size: 1rem;
@@ -137,24 +147,27 @@ option{
 /* creating folder */
 
 .Main_Createrfolder{
-    position: relative;
+    /* width: 100vw; */
+    /* position: relative; */
+  
 }
 .Ineercreate_folder{
     position: absolute;
-    max-width: 100%;
+    /* background-color: red; */
     
 }
 .Create_Folder{
-    /* width: 100vw;
-    max-width: 100%;
-    height: 100vh; */
+    /* width: 100vw; */
+    /* max-width: 100%; */
+    /* height: 100vh; */
     padding-left: 250px;
     padding-top: 30px;
     display: flex;
     flex-direction: column;
     gap: 30px;
     z-index: 0;
-    background: linear-gradient(#121212, #171923, #171923);  
+    /* background: linear-gradient(#121212, #171923, #171923);   */
+    /* background-color: red; */
 
 
 }
@@ -224,19 +237,62 @@ option{
     background-color: #4563a8;
 }
 
+/* newform */
+.Folder_Form{
+    display: flex;
+    gap: 1vw;
+}
+
+.New_folderForm{
+    border: none;
+    width: 13vw;
+    height: 15vw;
+    color: #FFFFFFEB;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7vh;
+    background-color: #FFFFFF80;
+    border-radius: 6px;
+    cursor: pointer;
+
+}
+/* .New_folderForm{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+} */
+.New_folderForm h3{
+    color: #FFFFFF;
+    font-family: Open sans;
+    font-size: 1rem;
+    font-weight: 400;
+
+}
+
+.New_folderForm i{
+    position: relative;
+    bottom: 11.5vh;
+    left: 6.4vw;
+    color: #F55050;
+}
+
+
+
+
 /* share email model */
 
 .Share_Model{
     width: 100%;
-    /* max-width: 100%; */
-    position: relative;
+    position: absolute;
     
     
 }
 .inner_shareModel{
     display: flex;
     justify-content: center;
-    height: 100vh;
+    height: 90vh;
     align-items: center;
 
 }
@@ -407,6 +463,8 @@ option{
     box-shadow: 0px 0px 3px 0px grey;
     text-align: center;
 }
+
+
 
 
 
