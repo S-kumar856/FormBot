@@ -159,3 +159,15 @@
     cursor: pointer;
 }
 
+/* workspace content */
+.Workspace_content{
+  display: flex;
+}
+
+.Workspace_Leftpanel{
+  width: 25%;
+  height: 50vh;
+  padding: 20px;
+  background-color: red;
+  color: white;
+}

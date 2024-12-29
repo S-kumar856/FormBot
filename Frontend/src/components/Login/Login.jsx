@@ -36,6 +36,7 @@ const Login = () => {
         })
         localStorage.setItem('token', data.token);
         toast.success("User Logged In Successfully");
+        navigate('/Formdashboard')
       }
       else {
         console.log(res)

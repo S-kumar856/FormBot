@@ -66,7 +66,7 @@ const FormDashboard = () => {
                     <div className={style.navbar}>
                         <select name="dropdown" id="dropdown">
                             <option value="name">Kumar workspace</option>
-                            <option value="setting" className={style.setting}>Settings</option>
+                            <option value="setting" className={style.setting} onClick={()=>navigate('/setting')}>Settings</option>
                             <option value="logout" className={style.logout}>Log Out</option>
                         </select>
                     </div>
@@ -98,7 +98,7 @@ const FormDashboard = () => {
                                 ))}
                             </div>
 
-                            <div className={style.Folder_File}>
+                            <div className={style.Folder_File} onClick={()=> navigate('/workspace')}>
                                 <span>+</span>
                                 <p>Create a typebot</p>
                             </div>

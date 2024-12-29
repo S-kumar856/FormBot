@@ -30,6 +30,11 @@ const Workspace = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className={style.Workspace_content}>
+                    <div className={style.Workspace_Leftpanel}></div>
+                    <div className={style.Workspace_Rightpanel}></div>
+                </div>
             </div>
         </>
     )

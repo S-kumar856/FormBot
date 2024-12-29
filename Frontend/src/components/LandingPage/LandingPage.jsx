@@ -1,5 +1,5 @@
 import React, { startTransition } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Platform from '../PlatForm/Platform';
 import ChatPage from '../ChatPage/ChatPage';
 import Featuers from '../Features/Featuers';
@@ -18,6 +18,7 @@ import orange from '../../assets/orangeBg.png';
 import blue from '../../assets/blueBg.png';
 
 const LandingPage = () => {
+    const navigate = useNavigate();
     return (
         <>
             <div className={style.MainContainer}>
@@ -31,7 +32,7 @@ const LandingPage = () => {
                     </div>
                     <div className={style.rightNav}>
                         <Link to={'/login'} className={style.NavLogin}>Sign in</Link>
-                        <button className={style.NavCreate}>Create a FormBot</button>
+                        <button className={style.NavCreate} onClick={()=>navigate('/login')}>Create a FormBot</button>
                     </div>
                 </div>
                 {/* content1 */}
