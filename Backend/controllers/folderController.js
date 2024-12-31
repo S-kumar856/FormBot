@@ -10,7 +10,6 @@ exports.createFolder = async (req, res) => {
     const userId = req.user.id; // Access userId correctly
     // Make sure user is authenticated
 
-    console.log(userId);
     if (!name) {
       return res
         .status(400)
@@ -163,8 +162,7 @@ exports.getFormsByFolderId = async (req, res) => {
 
 exports.getFormById = async (req, res) => {
   const { formId } = req.params; // Get formId from the request params
-  console.log(formId)
-  
+
   try {
     // Find the form by formId
     const form = await FormBot.findById(formId);
@@ -195,7 +193,7 @@ exports.getFormById = async (req, res) => {
 
 exports.updateFormById = async (req, res) => {
   const { formId } = req.params;  // Get formId from request params
-  const { name, fields } = req.body; // Get form name and fields to be updated
+  const { formBotName, fields } = req.body; // Get form name and fields to be updated
   console.log('Form ID:', formId);
   try {
     // Step 1: Find the form by ID
@@ -208,7 +206,7 @@ exports.updateFormById = async (req, res) => {
     }
 
     // Step 2: Update form data
-    form.name = name || form.name; // Update name if provided
+    form.name = formBotName || form.name; // Update name if provided
     form.fields = fields;  // Update the fields (bubbles and inputs)
 
     // Step 3: Save the updated form

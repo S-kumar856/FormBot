@@ -4,16 +4,20 @@
 }
 
 [data-theme="dark"]{
-  --bg-color : linear-gradient(#121212, #171923, #171923);
+  /* --bg-color : linear-gradient(#121212, #171923, #171923); */
+  --navbar-color : #18181B;
   --text-color:#FFFFFFEB;
+  --bg-color:#1F1F23
 }
 
 
 .Workspace_Main_Container{
-    width: 100%;
-    height: 100vh;
     background: var(--bg-color);
     color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    /* background-color: red; */
     /* background-color: #1F1F23; */
 }
 
@@ -21,10 +25,9 @@
     display: flex;
     justify-content: space-between;
     padding: 10px 20px;
-    /* background-color: #18181B; */
-    background: var(--bg-color);
+    background: var(--navbar-color);
     color: var(--text-color);
-    /* color:#FFFFFFEB; */
+
 }
 .Workspace_Theme{
     display: flex;
@@ -174,15 +177,87 @@
     cursor: pointer;
 }
 
-/* workspace content */
+/* ------------------workspace content------------------ */
 .Workspace_content{
   display: flex;
 }
 
 .Workspace_Leftpanel{
   width: 25%;
-  height: 50vh;
+  /* height: 100vh; */
   padding: 20px;
-  background-color: red;
+  margin: 0px 20px;
+  background-color: var(--navbar-color);
   color: white;
+  border: 2px solid #999494;
+  border-radius: 8px;
+}
+
+.sidebar{
+  padding-top: 7vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+.bubble{
+  margin-bottom: 10px;
+}
+.bubble h3{
+  font-family: Open sans;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.bubble button{
+  width: 149px;
+  height: 40px;
+  font-family: Open sans;
+  font-weight: 400;
+  font-size: 0.9rem;
+  background-color: var(--bg-color);
+  padding: 9px 17px 9px 17px;
+  border-radius: 8px;
+  border: 1px solid #27272A;
+
+  color: var(--text-color);
+  cursor: pointer;
+  margin: 8px;
+  text-align: start;
+}
+.bubble button i{
+  /* background-color: #4B83FF; */
+  color: #4B83FF;
+  margin-right: 10px;
+}
+
+
+.inputes h3{
+  font-family: Open sans;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.inputes button{
+  width: 149px;
+  height: 40px;
+  font-family: Open sans;
+  font-weight: 400;
+  font-size: 0.9rem;
+  background-color: var(--bg-color);
+  padding: 9px 17px 9px 17px;
+  border-radius: 8px;
+  border: 1px solid #27272A;
+  color: var(--text-color);
+  margin: 8px;
+  text-align: start;
+}
+
+.inputes button i{
+  color: #FFA54C;
+  margin-right: 10px;
 }

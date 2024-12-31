@@ -18,11 +18,13 @@ const FormDashboard = () => {
 
     const [newForm, setNewForm] = useState([]);
 
-// dark and light mode
+
+    // dark and light mode
     const { theme, toggleTheme } = useTheme();
 
-// getting folderid from the local storage
+    // getting folderid from the local storage
     const folderId = localStorage.getItem('folderId')
+    console.log("folderid", folderId)
 
     // targeting the input
     const handleInputChange = (e) => {
@@ -44,15 +46,15 @@ const FormDashboard = () => {
                 }
             );
             setCreateFolders(response.data.output);
-          
+
         } catch (error) {
             console.error("Error fetching folders:", error);
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchFolders();
-    },[])
+    }, [])
 
 
     // const handleLogout = () => {
@@ -62,7 +64,7 @@ const FormDashboard = () => {
 
     // creating the folder
     const handleCreateFolder = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
         if (!createInput) return;
 
         try {
@@ -88,29 +90,26 @@ const FormDashboard = () => {
         localStorage.setItem("folderId", index)
         setFolderToDelete(index);
         setConfirmDeleteModel(true);
-        setNewFormToDelete(index);
-        setConfirmDeleteFormModel(true)
         
-
     };
 
     // function to delete folder
     const handleDeleteFolder = async () => {
         try {
-          await axios.delete(
-            `http://localhost:4000/api/folders/folder/${folderId}`,
-            {
-              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-            }
-          );
-          // Remove deleted folder from the list
-          const updatedFolder = createFolders.filter((folder) => folder._id !== folderId)
-          setCreateFolders(updatedFolder);// Update the state
-          setConfirmDeleteModel(false);
+            await axios.delete(
+                `http://localhost:4000/api/folders/folder/${folderId}`,
+                {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                }
+            );
+            // Remove deleted folder from the list
+            const updatedFolder = createFolders.filter((folder) => folder._id !== folderId)
+            setCreateFolders(updatedFolder);// Update the state
+            setConfirmDeleteModel(false);
         } catch (error) {
-          console.error("Error deleting folder:", error);
+            console.error("Error deleting folder:", error);
         }
-      };
+    };
 
 
     // function for cancling the confirm modal funciton
@@ -121,34 +120,64 @@ const FormDashboard = () => {
         setConfirmDeleteFormModel(false);
     };
 
-// ---------------------------------------------------------------------------------------
-   
+    // ---------------------------------------------------------------------------------------
+
+    // handling forms
+
     const handleFormId = (id) => {
         localStorage.setItem("formId", id);
-      };
+        setNewFormToDelete(id);
+        setConfirmDeleteFormModel(true)
+    };
+
+// form id 
+    const formId = localStorage.getItem('formId')
     
 
-    const handleCreateForm = (folderId) => {
+    // Create Form in a specific folder and navigate to form creation
+    const handleCreateForm = () => {
         localStorage.setItem("folderId", folderId); // Save folder ID for form creation
+        
         navigate("/workspace"); // Navigate to the form creation page
+    };
+
+// get forms
+    const handlegetForms = async (item) => {
+        localStorage.setItem("folderId", item._id);
+
+        try {
+          const response = await axios.get(
+            `http://localhost:4000/api/folders/folders/${item._id}/forms`,
+            {
+              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            }
+          );
+          console.log(response.data)
+          setNewForm(Array.isArray(response.data.forms) ? response.data.forms : []);
+          if (response.data.forms.length > 0) {
+            localStorage.setItem("formId", response.data.forms[0]._id);
+          }
+        } catch (error) {
+          console.error("Error fetching forms:", error);
+        }
       };
 
-      // function to delete newform 
-    //   const handleNewFormDelete = () => {
-    //     if (NewFormToDelete !== null) {
-    //         // Create a new array excluding the folder at the specified index
-    //         const updatedFolders = createFolders.filter((_, i) => i !== NewFormToDelete);
-    //         setNewForm(updatedFolders);// Update the state
-    //         setNewFormToDelete(null); // update again to null
-    //     }
-    //     setConfirmDeleteFormModel(false);
-    // };
-
-   
-    // function for stroing multiple newform
-    const createNewForm = () => {
-        setNewForm([...newForm, newForm])
-    }
+    // Delete Form Functionality (fixed to pass form ID)
+    const handleDeleteForm = async () => {
+        try {
+            await axios.delete(
+                `http://localhost:4000/api/folders/form/${formId}`,
+                {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                }
+            );
+            // Remove deleted form from the list
+            setNewForm(newForm.filter((form) => form._id !== formId));
+            setConfirmDeleteFormModel(false)
+        } catch (error) {
+            console.error("Error deleting form:", error);
+        }
+    };
 
 
     return (
@@ -188,22 +217,23 @@ const FormDashboard = () => {
                             <div className={style.Folder}>
                                 <span onClick={handleAddFolder}><i className="fa-solid fa-folder-plus"></i>Create a folder</span>
                                 {createFolders.map((folder, index) => (
-                                    <div key={index} className={style.New_folder} >
-                                        {folder.name}<i className="fa-solid fa-trash-can" onClick={() => handleFolderClick(folder._id)}></i>
+                                    <div key={index} className={style.New_folder} onClick={()=> {handlegetForms(folder)}}>
+                                        {folder.name}
+                                        <i className="fa-solid fa-trash-can" onClick={()=>  handleFolderClick(folder._id)}></i>
                                     </div>
                                 ))}
                             </div>
                             <div className={style.Folder_Form}>
-                                <div className={style.Folder_File} onClick={createNewForm}> {/*  */}
+                                <div className={style.Folder_File} onClick={handleCreateForm}> {/*  */}
                                     <span>+</span>
                                     <p>Create a typebot</p>
                                 </div>
 
+                                    
                                 {newForm.map((form, index) => (
-                                    <div key={index} className={style.New_folderForm} onClick={() => navigate('/workspace')}>  {/*  onClick={()=> navigate('/workspace')} */}
-                                        <i className="fa-solid fa-trash-can"></i>
-                                        {form}
-                                        <h3>New form</h3>
+                                    <div key={index} className={style.New_folderForm} onClick={()=> navigate('/workspace')}> 
+                                        <i className="fa-solid fa-trash-can" onClick={() => handleFormId(form._id)} ></i> 
+                                        <h3>{form.name || "Unnamed Form"}</h3>
                                     </div>
                                 ))}
                             </div>
@@ -277,20 +307,20 @@ const FormDashboard = () => {
 
 
                     {/* confirm Delete newform model */}
-                    {/* {confirmDeleteFormModel && (
+                    {confirmDeleteFormModel && (
                         <div className={style.Create_delete_modal}>
                             <div className={style.Create_folder_modalContent}>
                                 <h3>Are you sure you want to
                                     delete this Form ?</h3>
 
                                 <div className={style.Create_folder_modalActions}>
-                                    <button className={style.doneButton} onClick={handleNewFormDelete} >Confirm</button>
+                                    <button className={style.doneButton} onClick={handleDeleteForm} >Confirm</button>
                                     <span className={style.line}>|</span>
                                     <button className={style.cancelButton} onClick={handleCancelDelete} >Cancel</button>
                                 </div>
                             </div>
                         </div>
-                    )} */}
+                    )}
 
                 </div>
             </div>
