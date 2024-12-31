@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+// import axios from 'axios'
 import style from './Register.module.css';
 import { userRegister } from '../../../services';
 import { toast } from 'react-toastify';
@@ -23,15 +24,15 @@ const Register = () => {
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
 
-        // if (registerForm.password !== registerForm.confirmpassword) {
-        //     toast.error("Passwords do not match!");
-        //     return; // Stop further execution if they don't match
-        // }
+        if (registerForm.password !== registerForm.confirmpassword) {
+            toast.error("Passwords do not match!");
+            return; // Stop further execution if they don't match
+        }
 
         try {
             const res = await userRegister(registerForm);
             if (res.status === 200) {
-
+                const data = await res.json();
                 setRegisterForm({
                     username: '',
                     email: '',
@@ -50,6 +51,14 @@ const Register = () => {
         } catch (error) {
             console.log(error);
         }
+
+        // try {
+        //     const res = await axios.post('http://localhost:4000/api/user/register', { registerForm } );
+        //     localStorage.setItem('token', res.data.token);
+        //     navigate('/login');
+        //   } catch (err) {
+        //     console.log(err.response.data.msg || 'Server Error');
+        //   }
 
     }
     return (

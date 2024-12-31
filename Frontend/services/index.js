@@ -20,4 +20,28 @@ export const userLogin = async (data) => {
         },
         body: JSON.stringify(data)
     })
-}
+};
+
+// create folder service
+// export const createFolder = async (data) => {
+//     return await fetch(`${URL}/folders/create-folder`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': 'Bearer ' + localStorage.getItem('token')
+//         },
+//         body: JSON.stringify(data)
+//     })
+// };
+
+// get folders
+export const getFolder = async () => {
+    const response = await fetch(`${URL}/api/folders/folders/:id`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response;
+  };

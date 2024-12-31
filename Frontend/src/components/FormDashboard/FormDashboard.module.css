@@ -27,7 +27,6 @@
     width: 60vw;
     display: flex;
     justify-content: end;
- 
 }
 .NavShare{
     width: 40vw;
@@ -36,12 +35,14 @@
     gap: 80px;
 }
 .dark{
+
     display: flex;
     align-items: center;
     gap: 5px;
     font-family: Open sans;
     font-size: 1rem;
-    color: #FFFFFFEB;
+    color: var(--text-color);
+    
 }
 
 
@@ -129,16 +130,21 @@
 
 /* select drop down */
 .workspace_Navbar select{
-    background-color: transparent;
+    /* background-color: transparent;    */
     border-radius: 6px;
     width: 14vw;
     color: var(--text-color); 
     font-family: Open sans;
     font-weight: 600;
     font-size: 1rem;
+    background: var(--bg-color);
+    
+ 
 }
 option{
-    background-color: #121212;
+ 
+    /* color: var(--text-color); */
+    /* background-color: #121212; */
 }
 .logout{
     color: #FFA54C;

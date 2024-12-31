@@ -3,31 +3,36 @@ const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
-const userRoute = require('./routes/user.route.js') ;
+const userRoute = require('./routes/user.route.js');
+const folderRoutes = require('./routes/folder.route.js')
 const cors = require('cors');
 dotenv.config();
+
+// enable cors
 app.use(cors())
 
-const port = process.env.PORT || 3000;
+// Define the port from environment or default to 3000
+const PORT = process.env.PORT || 3000;
 
 
 // middelwares & routers
 app.use(express.urlencoded({ extended:true }));
 app.use(bodyParser.json());
 
+// Route middleware for user authentication (register/login)
 app.use('/api/user', userRoute);
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
-})
+// Route middleware for folder-related operations
+app.use('/api/folders', folderRoutes);
 
-app.listen(port, () => {
+
+app.listen(PORT, () => {
     mongoose.connect(process.env.MONGODB_URL)
     .then(()=>{
         console.log("Connected to MongoDB")
     }).catch((err) => {
         console.log(err);
     })
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on port ${PORT}`);
 });
 
