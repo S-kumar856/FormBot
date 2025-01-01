@@ -76,7 +76,6 @@ const FormDashboard = () => {
                 }
             );
             console.log(response.data.folder);
-            // const res = await createFolder(createInput);
             setCreateFolders([...createFolders, response.data.folder]);
             setCreateInput("");
             setCreateShowModal(false);
@@ -231,7 +230,7 @@ const FormDashboard = () => {
 
                                     
                                 {newForm.map((form, index) => (
-                                    <div key={index} className={style.New_folderForm} onClick={()=> navigate('/workspace')}> 
+                                    <div key={index} className={style.New_folderForm}> 
                                         <i className="fa-solid fa-trash-can" onClick={() => handleFormId(form._id)} ></i> 
                                         <h3>{form.name || "Unnamed Form"}</h3>
                                     </div>

@@ -97,7 +97,6 @@ const Workspace = () => {
                 alert("Form Saved successfully!");
             }
         } catch (error) {
-            console.error("Error Saving form:", error);
         }
     };
 
@@ -213,28 +212,33 @@ const Workspace = () => {
                         </div>
                     </div>
                     <div className={style.Workspace_Rightpanel}>
-                        {fields.map((field, index) => (
-                            <div key={index} className="form-field">
-                                <label>{field.label}</label>
-                                {field.type === 'input' ? (
-                                    <input
-                                        type={field.inputType}
-                                        placeholder={`Enter ${field.inputType}`}
-                                        value={field.value}
-                                        onChange={(e) => handleFieldChange(index, e.target.value)}
-                                    />
-                                ) : (
-                                    <input
-                                        type="text"
-                                        placeholder="Enter bubble data"
-                                        value={field.value}
-                                        onChange={(e) => handleFieldChange(index, e.target.value)}
-                                    />
-                                )}
-                                {/* Add Delete Button */}
-                                <button onClick={() => deleteField(index)}>Delete</button>
+                        <div className={style.Workspace_Rightpanel_Container}>
+                            <div className={style.startFlag}>
+                                <h4><i className="fa-regular fa-flag"></i>Start</h4>
                             </div>
-                        ))}
+                            {fields.map((field, index) => (
+                                <div key={index} className="form-field">
+                                    <label>{field.label}</label>
+                                    {field.type === 'input' ? (
+                                        <input
+                                            type={field.inputType}
+                                            placeholder={`Enter ${field.inputType}`}
+                                            value={field.value}
+                                            onChange={(e) => handleFieldChange(index, e.target.value)}
+                                        />
+                                    ) : (
+                                        <input
+                                            type="text"
+                                            placeholder="Enter bubble data"
+                                            value={field.value}
+                                            onChange={(e) => handleFieldChange(index, e.target.value)}
+                                        />
+                                    )}
+                                    {/* Add Delete Button */}
+                                    <button onClick={() => deleteField(index)}>Delete</button>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
