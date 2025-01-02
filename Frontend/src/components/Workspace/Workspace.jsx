@@ -42,7 +42,7 @@ const Workspace = () => {
     // Handle adding a bubble
     const addBubble = (type) => {
         const newField = {
-            label: `${type} Bubble`,
+            label: `${type}`,
             type: "bubble",
             sequence: fields.length + 1,
             prefilled: true, // Bubble will have prefilled data
@@ -54,7 +54,7 @@ const Workspace = () => {
     // Handle adding an input field
     const addInput = (inputType) => {
         const newField = {
-            label: `${inputType.charAt(0).toUpperCase() + inputType.slice(1)} Input`,
+            label: `${inputType.charAt(0).toUpperCase() + inputType.slice(1)}`,
             type: "input",
             inputType: inputType,
             sequence: fields.length + 1,
@@ -97,6 +97,7 @@ const Workspace = () => {
                 alert("Form Saved successfully!");
             }
         } catch (error) {
+            console.error("Error Saving form:", error);
         }
     };
 
@@ -201,7 +202,7 @@ const Workspace = () => {
                             </div>
                             <div className={style.inputes}>
                                 <h3>Input Fields</h3>
-                                <button onClick={() => addInput("text")}>   Text</button>
+                                <button onClick={() => addInput("text")}>Text</button>
                                 <button onClick={() => addInput("number")}><i className="fa-regular fa-hashtag"></i>Number</button>
                                 <button onClick={() => addInput("email")}><i className="fa-regular fa-at"></i>Email</button>
                                 <button onClick={() => addInput("number")}><i className="fa-solid fa-phone"></i>Phone</button>
@@ -217,7 +218,7 @@ const Workspace = () => {
                                 <h4><i className="fa-regular fa-flag"></i>Start</h4>
                             </div>
                             {fields.map((field, index) => (
-                                <div key={index} className="form-field">
+                                <div key={index} className={style.Workspace_FormField}>
                                     <label>{field.label}</label>
                                     {field.type === 'input' ? (
                                         <input
@@ -235,7 +236,10 @@ const Workspace = () => {
                                         />
                                     )}
                                     {/* Add Delete Button */}
-                                    <button onClick={() => deleteField(index)}>Delete</button>
+                                    <div className={style.deleteBtn}>
+
+                                        <button onClick={() => deleteField(index)}> <i className="fa-solid fa-trash-can"></i></button>
+                                    </div>
                                 </div>
                             ))}
                         </div>

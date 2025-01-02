@@ -35,6 +35,8 @@ const FormDashboard = () => {
         setCreateShowModal(true);
     };
 
+    
+
     // fetching folders from backend
     const fetchFolders = async () => {
         try {
@@ -179,15 +181,40 @@ const FormDashboard = () => {
     };
 
 
+    // naviagte function for select tags  {setting, logout}
+    const handleSetting = (e) => {
+        const setting = e.target.value;
+        if (setting === "setting") {
+            navigate(`/${setting}`);
+        }
+        else{
+            logout()
+        }
+    }
+
+    const logout = () => {
+        // Clear user-related data (e.g., token, userId) from localStorage
+        localStorage.removeItem("token");
+        localStorage.removeItem("formId");
+        localStorage.removeItem("folderId");
+    
+        // Optionally clear any other application state here if needed
+        alert("Logged out successfully!");
+    
+        // Navigate to the login page
+       navigate('/login') // Replace "/login" with the actual path to your login page
+    };
+    
+
     return (
         <>
             <div className={style.Main_Container}>
                 {/* navbar */}
                 <div className={style.workspace_Navbar}>
                     <div className={style.navbar}>
-                        <select name="dropdown" id="dropdown">
+                        <select name="dropdown" id="dropdown" onChange={handleSetting}>
                             <option value="name">Kumar workspace</option>
-                            <option value="setting" className={style.setting} onClick={() => navigate('/setting')}>Settings</option>
+                            <option value="setting" className={style.setting}>Settings</option>
                             <option value="logout" className={style.logout}>Log Out</option>
                         </select>
                     </div>
@@ -228,7 +255,6 @@ const FormDashboard = () => {
                                     <p>Create a typebot</p>
                                 </div>
 
-                                    
                                 {newForm.map((form, index) => (
                                     <div key={index} className={style.New_folderForm}> 
                                         <i className="fa-solid fa-trash-can" onClick={() => handleFormId(form._id)} ></i> 

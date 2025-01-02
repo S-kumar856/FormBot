@@ -1,11 +1,26 @@
 import React, { useState } from 'react'
 import styles from './Setting.module.css'
+import { useNavigate } from 'react-router-dom';
 
 const Setting = () => {
-
+    const navigate = useNavigate();
     const [showEmail, setShowEmail] = useState(false);
     const [showOldPassword, setShowOldPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
+
+
+    const logout = () => {
+        // Clear user-related data (e.g., token, userId) from localStorage
+        localStorage.removeItem("token");
+        localStorage.removeItem("formId");
+        localStorage.removeItem("folderId");
+    
+        // Optionally clear any other application state here if needed
+        alert("Logged out successfully!");
+    
+        // Navigate to the login page
+       navigate('/login') // Replace "/login" with the actual path to your login page
+    };
 
     return (
         <div className={styles.settingsContainer}>
@@ -60,7 +75,7 @@ const Setting = () => {
                 </form>
             </div>
             <div className={styles.logout}>
-                <button className={styles.logoutBtn}><i className="fa-solid fa-arrow-right-from-bracket"></i>Log out</button>
+                <button className={styles.logoutBtn} onClick={logout}><i className="fa-solid fa-arrow-right-from-bracket"></i>Log out</button>
             </div>
         </div>
     );

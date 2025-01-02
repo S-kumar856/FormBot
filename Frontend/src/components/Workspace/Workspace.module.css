@@ -20,8 +20,6 @@
   display: flex;
   flex-direction: column;
   gap: 3vh;
-  /* background-color: red; */
-  /* background-color: #1F1F23; */
 }
 
 .Workspace_Navbar {
@@ -267,12 +265,10 @@ input:checked + .slider:before {
 
 .Workspace_Rightpanel {
   width: 70%;
-  /* height: 100vh; */
   padding: 20px;
   margin: 0px 20px;
-  /* background-color: var(--navbar-color); */
   color: white;
-  border: 1px solid #d6d6d6;
+
   border-radius: 8px;
   position: relative;
 }
@@ -282,6 +278,7 @@ input:checked + .slider:before {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 3vh;
 }
 
 .startFlag {
@@ -293,6 +290,8 @@ input:checked + .slider:before {
   background-color: var(--navbar-color);
   color: var(--text-color);
   padding: 15px;
+  margin-top: 8vh;
+  margin-bottom: 5vh;
 }
 
 .startFlag h4 {
@@ -303,4 +302,60 @@ input:checked + .slider:before {
 
 .startFlag h4 i {
   margin-right: 0.7vw;
+}
+
+.Workspace_FormField{
+  width: 315px;
+  height: 119px;
+  background-color: var(--navbar-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  border: 1px solid #d6d6d6;
+  /* gap: 10px; */
+}
+
+.Workspace_FormField label{
+  font-family: Open sans;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.Workspace_FormField input{
+  width: 100%;
+  height: 40px;
+  background-color: var(--bg-color);
+  /* border: 1px solid #d6d6d6; */
+  padding: 5px 20px;
+  border-radius: 3px;
+  border: none;
+}
+
+/* .Workspace_FormField button{
+  border-radius: 50%;
+} */
+
+.deleteBtn{
+  position: absolute;
+  top: -2vh;
+  right: -1vw;
+  background-color: var(--bg-color);  
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #d6d6d6;
+}
+.deleteBtn button{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #f55050;
+  cursor: pointer;
 }
