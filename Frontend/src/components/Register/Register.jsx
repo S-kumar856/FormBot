@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import axios from 'axios'
 import style from './Register.module.css';
 import { userRegister } from '../../../services';
 import { toast } from 'react-toastify';
@@ -51,14 +50,6 @@ const Register = () => {
         } catch (error) {
             console.log(error);
         }
-
-        // try {
-        //     const res = await axios.post('http://localhost:4000/api/user/register', { registerForm } );
-        //     localStorage.setItem('token', res.data.token);
-        //     navigate('/login');
-        //   } catch (err) {
-        //     console.log(err.response.data.msg || 'Server Error');
-        //   }
 
     }
     return (

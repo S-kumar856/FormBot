@@ -6,6 +6,7 @@ import LandingPage from './components/LandingPage/LandingPage';
 import FormDashboard from './components/FormDashboard/FormDashboard';
 import Setting from './components/settings/Setting';
 import Workspace from './components/Workspace/Workspace';
+import ChatbotForm from './components/ChatBotPage/ChatBot';
 
 
 
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/Formdashboard" element={<FormDashboard />} />
           <Route path='/setting' element={<Setting />} />
           <Route path='/workspace' element={<Workspace />} />
+          <Route path='/chatbot' element={<ChatbotForm/>} />
         </Routes>
 
     </>

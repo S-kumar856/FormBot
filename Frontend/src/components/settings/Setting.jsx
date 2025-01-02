@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styles from './Setting.module.css'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Setting = () => {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Setting = () => {
         localStorage.removeItem("folderId");
     
         // Optionally clear any other application state here if needed
-        alert("Logged out successfully!");
+        toast.success("Logged out successfully!");
     
         // Navigate to the login page
        navigate('/login') // Replace "/login" with the actual path to your login page

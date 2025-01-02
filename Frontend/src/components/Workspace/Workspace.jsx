@@ -4,6 +4,7 @@ import style from './Workspace.module.css';
 import axios from 'axios';
 import { useTheme } from '../theme-context';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Workspace = () => {
     const navigate = useNavigate()
@@ -33,6 +34,8 @@ const Workspace = () => {
                 }
             } catch (error) {
                 console.error("Error fetching form data:", error);
+                toast.error("Error fetching form data");
+
             }
         };
 
@@ -94,10 +97,11 @@ const Workspace = () => {
             console.log(response)
 
             if (response.data.success) {
-                alert("Form Saved successfully!");
+                toast.success("Form Saved successfully!");
             }
         } catch (error) {
             console.error("Error Saving form:", error);
+            toast.error("Error Saving form");
         }
     };
 
@@ -119,28 +123,34 @@ const Workspace = () => {
             );
 
             if (response.data.success) {
-                alert("Form updated successfully!");
+                toast.success("Form updated successfully!");
             }
         } catch (error) {
             console.error("Error updating form:", error);
+            toast.error("Error updating form");
         }
     };
 
-    // Handle generating a shareable link
-    const shareForm = async () => {
-        try {
-            const response = await axios.post(
-                "http://localhost:4000/api/formbuilder/share",
-                { fields },
-                {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-                }
-            );
-            alert("Form link generated!");
-        } catch (error) {
-            console.error("Error sharing form:", error);
+
+     // Handle generating a shareable link
+  const shareForm = async () => {
+    console.log("hello");
+    const id = localStorage.getItem("formId");
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/api/forms/share/${id}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
-    };
+      );
+      console.log("Form link:", response.data.linkId);
+      localStorage.setItem("formId",formId);
+      localStorage.setItem("linkId", response.data.linkId);
+      alert("Form link generated!");
+    } catch (error) {
+      console.error("Error sharing form:", error);
+    }
+  };
 
     // clearing formfield and navigate to formdashboard
     const handleCross = () => {
@@ -183,7 +193,7 @@ const Workspace = () => {
                             <p>Dark</p>
                         </div>
                         <div className={style.Workspace_NavbarButton}>
-                            <button className={style.Workspace_shareBtn}>Share</button>
+                            <button className={style.Workspace_shareBtn} onClick={shareForm}>Share</button>
                             <button className={style.Workspace_saveBtn} onClick={saveForm}>Save</button>
                             <button className={style.Workspace_XBtn} onClick={handleCross}>x</button>
                         </div>
@@ -228,12 +238,15 @@ const Workspace = () => {
                                             onChange={(e) => handleFieldChange(index, e.target.value)}
                                         />
                                     ) : (
+                                        <div>
+                                        {/* <i className="fa-regular fa-message"></i> */}
                                         <input
                                             type="text"
                                             placeholder="Enter bubble data"
                                             value={field.value}
                                             onChange={(e) => handleFieldChange(index, e.target.value)}
                                         />
+                                        </div>
                                     )}
                                     {/* Add Delete Button */}
                                     <div className={style.deleteBtn}>

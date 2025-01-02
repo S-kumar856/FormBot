@@ -40,12 +40,13 @@
   gap: 4vw;
 }
 .Workspace_input input {
-  /* background-color: #37373E; */
+
   background-color: var(--bg-color);
   border: 1px solid #d6d6d6;
   height: 4vh;
   padding: 5px 20px;
   border-radius: 3px;
+  color: var(--text-color);
 }
 .Workspace_flowbtn {
   color: #7ea6ff;
@@ -186,7 +187,6 @@ input:checked + .slider:before {
 
 .Workspace_Leftpanel {
   width: 25%;
-  /* height: 100vh; */
   padding: 20px;
   margin: 0px 20px;
   background-color: var(--navbar-color);
@@ -228,7 +228,6 @@ input:checked + .slider:before {
   text-align: start;
 }
 .bubble button i {
-  /* background-color: #4B83FF; */
   color: #4b83ff;
   margin-right: 10px;
 }
@@ -285,7 +284,7 @@ input:checked + .slider:before {
   width: 309px;
   height: 60px;
   background-color: red;
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid #d6d6d6;
   background-color: var(--navbar-color);
   color: var(--text-color);
@@ -315,7 +314,6 @@ input:checked + .slider:before {
   border-radius: 8px;
   position: relative;
   border: 1px solid #d6d6d6;
-  /* gap: 10px; */
 }
 
 .Workspace_FormField label{
@@ -330,15 +328,12 @@ input:checked + .slider:before {
   width: 100%;
   height: 40px;
   background-color: var(--bg-color);
-  /* border: 1px solid #d6d6d6; */
+  border: 0.1px solid #d6d6d6;
   padding: 5px 20px;
   border-radius: 3px;
-  border: none;
+  color: var(--text-color);
 }
 
-/* .Workspace_FormField button{
-  border-radius: 50%;
-} */
 
 .deleteBtn{
   position: absolute;

@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const userRoute = require('./routes/user.route.js');
 const folderRoutes = require('./routes/folder.route.js')
+const formRoutes = require('./routes/form.route.js')
 const cors = require('cors');
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use('/api/user', userRoute);
 
 // Route middleware for folder-related operations
 app.use('/api/folders', folderRoutes);
+app.use('/api/forms', formRoutes);
 
 
 app.listen(PORT, () => {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import style from './FormDashboard.module.css'
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../theme-context';
+import { toast } from 'react-toastify';
 
 import axios from 'axios';
 
@@ -24,7 +25,6 @@ const FormDashboard = () => {
 
     // getting folderid from the local storage
     const folderId = localStorage.getItem('folderId')
-    console.log("folderid", folderId)
 
     // targeting the input
     const handleInputChange = (e) => {
@@ -35,7 +35,7 @@ const FormDashboard = () => {
         setCreateShowModal(true);
     };
 
-    
+
 
     // fetching folders from backend
     const fetchFolders = async () => {
@@ -51,6 +51,8 @@ const FormDashboard = () => {
 
         } catch (error) {
             console.error("Error fetching folders:", error);
+            toast.error("Error fetching folders");
+
         }
     };
 
@@ -59,10 +61,6 @@ const FormDashboard = () => {
     }, [])
 
 
-    // const handleLogout = () => {
-    //     localStorage.removeItem('token');
-    //     navigate('/login');
-    // };
 
     // creating the folder
     const handleCreateFolder = async (e) => {
@@ -81,8 +79,10 @@ const FormDashboard = () => {
             setCreateFolders([...createFolders, response.data.folder]);
             setCreateInput("");
             setCreateShowModal(false);
+            toast.success("Folder created successfully");
         } catch (error) {
             console.error("Error creating folder:", error);
+            toast.error("Error creating folder");
         }
     };
 
@@ -91,7 +91,7 @@ const FormDashboard = () => {
         localStorage.setItem("folderId", index)
         setFolderToDelete(index);
         setConfirmDeleteModel(true);
-        
+
     };
 
     // function to delete folder
@@ -107,8 +107,10 @@ const FormDashboard = () => {
             const updatedFolder = createFolders.filter((folder) => folder._id !== folderId)
             setCreateFolders(updatedFolder);// Update the state
             setConfirmDeleteModel(false);
+            toast.success("Folder deleted successfully");
         } catch (error) {
             console.error("Error deleting folder:", error);
+            toast.error("Error deleting folder");
         }
     };
 
@@ -131,37 +133,38 @@ const FormDashboard = () => {
         setConfirmDeleteFormModel(true)
     };
 
-// form id 
+    // form id 
     const formId = localStorage.getItem('formId')
-    
+
 
     // Create Form in a specific folder and navigate to form creation
     const handleCreateForm = () => {
         localStorage.setItem("folderId", folderId); // Save folder ID for form creation
-        
         navigate("/workspace"); // Navigate to the form creation page
     };
 
-// get forms
+    // get forms
     const handlegetForms = async (item) => {
         localStorage.setItem("folderId", item._id);
 
         try {
-          const response = await axios.get(
-            `http://localhost:4000/api/folders/folders/${item._id}/forms`,
-            {
-              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            const response = await axios.get(
+                `http://localhost:4000/api/folders/folders/${item._id}/forms`,
+                {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                }
+            );
+            console.log(response.data)
+            setNewForm(Array.isArray(response.data.forms) ? response.data.forms : []);
+            if (response.data.forms.length > 0) {
+                localStorage.setItem("formId", response.data.forms[0]._id);
             }
-          );
-          console.log(response.data)
-          setNewForm(Array.isArray(response.data.forms) ? response.data.forms : []);
-          if (response.data.forms.length > 0) {
-            localStorage.setItem("formId", response.data.forms[0]._id);
-          }
+       
         } catch (error) {
-          console.error("Error fetching forms:", error);
+            console.error("Error fetching forms:", error);
+            toast.error("Error fetching forms");
         }
-      };
+    };
 
     // Delete Form Functionality (fixed to pass form ID)
     const handleDeleteForm = async () => {
@@ -175,8 +178,10 @@ const FormDashboard = () => {
             // Remove deleted form from the list
             setNewForm(newForm.filter((form) => form._id !== formId));
             setConfirmDeleteFormModel(false)
+            toast.success("Form deleted successfully");
         } catch (error) {
             console.error("Error deleting form:", error);
+            toast.error("Error deleting form");
         }
     };
 
@@ -187,7 +192,7 @@ const FormDashboard = () => {
         if (setting === "setting") {
             navigate(`/${setting}`);
         }
-        else{
+        else {
             logout()
         }
     }
@@ -197,14 +202,14 @@ const FormDashboard = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("formId");
         localStorage.removeItem("folderId");
-    
+
         // Optionally clear any other application state here if needed
-        alert("Logged out successfully!");
-    
+        toast.success("Logged out successfully!");
+
         // Navigate to the login page
-       navigate('/login') // Replace "/login" with the actual path to your login page
+        navigate('/login') // Replace "/login" with the actual path to your login page
     };
-    
+
 
     return (
         <>
@@ -243,9 +248,9 @@ const FormDashboard = () => {
                             <div className={style.Folder}>
                                 <span onClick={handleAddFolder}><i className="fa-solid fa-folder-plus"></i>Create a folder</span>
                                 {createFolders.map((folder, index) => (
-                                    <div key={index} className={style.New_folder} onClick={()=> {handlegetForms(folder)}}>
+                                    <div key={index} className={style.New_folder} onClick={() => { handlegetForms(folder) }}>
                                         {folder.name}
-                                        <i className="fa-solid fa-trash-can" onClick={()=>  handleFolderClick(folder._id)}></i>
+                                        <i className="fa-solid fa-trash-can" onClick={() => handleFolderClick(folder._id)}></i>
                                     </div>
                                 ))}
                             </div>
@@ -256,8 +261,10 @@ const FormDashboard = () => {
                                 </div>
 
                                 {newForm.map((form, index) => (
-                                    <div key={index} className={style.New_folderForm}> 
-                                        <i className="fa-solid fa-trash-can" onClick={() => handleFormId(form._id)} ></i> 
+                                    <div key={index} className={style.New_folderForm} onClick={() => navigate(`/workspace`)}>
+                                        <i className="fa-solid fa-trash-can" onClick={(e) => {handleFormId(form._id)
+                                            e.stopPropagation()}
+                                        } ></i>
                                         <h3>{form.name || "Unnamed Form"}</h3>
                                     </div>
                                 ))}

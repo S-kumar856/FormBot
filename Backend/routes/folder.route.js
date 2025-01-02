@@ -1,8 +1,8 @@
 const express = require('express');
-const { createFolder, createFormBot, getFolders, getFormsByFolderId,updateFormById,deleteFolderById,deleteFormById ,shareForm } = require('../controllers/folderController');
+const { createFolder, createFormBot, getFolders, getFormsByFolderId,updateFormById,deleteFolderById,deleteFormById ,shareForm } = require('../controllers/folder.Controller');
 const router = express.Router();
 const auth = require('../middlewares/AuthMiddleware'); // Middleware for user authentication
-const { getFormById } = require('../controllers/folderController');
+const { getFormById } = require('../controllers/folder.Controller');
 
 // const { getFormsByFolderId } = require('../controllers/formController');
 
