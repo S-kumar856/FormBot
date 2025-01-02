@@ -78,6 +78,7 @@ exports.createFormBot = async (req, res) => {
 
     // Step 5: Save the form bot
     const savedFormBot = await newFormBot.save();
+    console.log('Saved Form Bot ID:', savedFormBot._id);
 
     // Step 6: Add the form bot to the folder
     folder.formBots.push(savedFormBot._id);  // Associate the form bot with the folder

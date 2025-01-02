@@ -12,6 +12,7 @@ const Workspace = () => {
     const [fields, setFields] = useState([]);
     const [formName, setFormName] = useState("");
     const formId = localStorage.getItem("formId"); // Get formId from localStorage or from URL parameters
+    console.log("Form ID:", formId);
 
     // Fetch form data when the component mounts
     useEffect(() => {
@@ -19,7 +20,7 @@ const Workspace = () => {
             try {
                 if (formId) {
                     const response = await axios.get(
-                        `http://localhost:4000/api/folders/form/${formId}`,
+                        `http://localhost:4000/api/forms/form/${formId}`,
                         {
                             headers: {
                                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -28,9 +29,17 @@ const Workspace = () => {
                     );
                     if (response.data.success) {
                         const form = response.data.form;
+
                         setFormName(form.name); // Set form name
                         setFields(form.fields); // Set the form fields (bubbles and inputs)
                     }
+                    else {
+                        // Reset state if no formId exists
+                        setFormName("");
+                        setFields([]);
+                    }
+
+
                 }
             } catch (error) {
                 console.error("Error fetching form data:", error);
@@ -77,6 +86,9 @@ const Workspace = () => {
     const saveForm = async () => {
         try {
             const selectedFolderId = localStorage.getItem("folderId"); // Retrieve the folder ID from localStorage
+            console.log(formId)
+            console.log(fields)
+
 
             if (!selectedFolderId) {
                 alert("Please select a folder to save the form bot.");
@@ -94,10 +106,18 @@ const Workspace = () => {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
             );
-            console.log(response)
+
+            console.log(response.data.formBot.name);
 
             if (response.data.success) {
+
+                localStorage.setItem("formId", response.data.formBot._id); // Save the new formId in localStorage
                 toast.success("Form Saved successfully!");
+
+                // Reset form state for a new form
+                setFormName("");
+                setFields([]);
+              
             }
         } catch (error) {
             console.error("Error Saving form:", error);
@@ -111,7 +131,7 @@ const Workspace = () => {
             const selectedFolderId = localStorage.getItem("folderId"); // Retrieve the folder ID from localStorage
 
             const response = await axios.put(
-                `http://localhost:4000/api/folders/form/${formId}`, // PUT request to update the form by formId
+                `http://localhost:4000/api/forms/form/${formId}`, // PUT request to update the form by formId
                 {
                     folderId: selectedFolderId, // folder where formbot should be update
                     formBotName: formName, // Form name
@@ -132,25 +152,25 @@ const Workspace = () => {
     };
 
 
-     // Handle generating a shareable link
-  const shareForm = async () => {
-    console.log("hello");
-    const id = localStorage.getItem("formId");
-    try {
-      const response = await axios.post(
-        `http://localhost:4000/api/forms/share/${id}`,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    // Handle generating a shareable link
+    const shareForm = async () => {
+        console.log("hello");
+        const id = localStorage.getItem("formId");
+        try {
+            const response = await axios.post(
+                `http://localhost:4000/api/forms/share/${id}`,
+                {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                }
+            );
+            console.log("Form link:", response.data.linkId);
+            localStorage.setItem("formId", formId);
+            localStorage.setItem("linkId", response.data.linkId);
+            alert("Form link generated!");
+        } catch (error) {
+            console.error("Error sharing form:", error);
         }
-      );
-      console.log("Form link:", response.data.linkId);
-      localStorage.setItem("formId",formId);
-      localStorage.setItem("linkId", response.data.linkId);
-      alert("Form link generated!");
-    } catch (error) {
-      console.error("Error sharing form:", error);
-    }
-  };
+    };
 
     // clearing formfield and navigate to formdashboard
     const handleCross = () => {
@@ -194,6 +214,7 @@ const Workspace = () => {
                         </div>
                         <div className={style.Workspace_NavbarButton}>
                             <button className={style.Workspace_shareBtn} onClick={shareForm}>Share</button>
+
                             <button className={style.Workspace_saveBtn} onClick={saveForm}>Save</button>
                             <button className={style.Workspace_XBtn} onClick={handleCross}>x</button>
                         </div>
@@ -239,13 +260,13 @@ const Workspace = () => {
                                         />
                                     ) : (
                                         <div>
-                                        {/* <i className="fa-regular fa-message"></i> */}
-                                        <input
-                                            type="text"
-                                            placeholder="Enter bubble data"
-                                            value={field.value}
-                                            onChange={(e) => handleFieldChange(index, e.target.value)}
-                                        />
+                                            {/* <i className="fa-regular fa-message"></i> */}
+                                            <input
+                                                type="text"
+                                                placeholder="Enter bubble data"
+                                                value={field.value}
+                                                onChange={(e) => handleFieldChange(index, e.target.value)}
+                                            />
                                         </div>
                                     )}
                                     {/* Add Delete Button */}

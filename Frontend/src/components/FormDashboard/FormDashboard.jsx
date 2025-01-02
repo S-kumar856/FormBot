@@ -80,6 +80,7 @@ const FormDashboard = () => {
             setCreateInput("");
             setCreateShowModal(false);
             toast.success("Folder created successfully");
+            localStorage.removeItem("formId");
         } catch (error) {
             console.error("Error creating folder:", error);
             toast.error("Error creating folder");
@@ -126,7 +127,10 @@ const FormDashboard = () => {
     // ---------------------------------------------------------------------------------------
 
     // handling forms
-
+    const handlegetFormId = (id) => {
+        localStorage.setItem("formId", id);
+        navigate("/workspace");
+    }
     const handleFormId = (id) => {
         localStorage.setItem("formId", id);
         setNewFormToDelete(id);
@@ -139,17 +143,18 @@ const FormDashboard = () => {
 
     // Create Form in a specific folder and navigate to form creation
     const handleCreateForm = () => {
+        // localStorage.removeItem("formId"); // Clear form ID from localStorage
         localStorage.setItem("folderId", folderId); // Save folder ID for form creation
         navigate("/workspace"); // Navigate to the form creation page
     };
 
     // get forms
     const handlegetForms = async (item) => {
-        localStorage.setItem("folderId", item._id);
+        localStorage.setItem("folderId", item);
 
         try {
             const response = await axios.get(
-                `http://localhost:4000/api/folders/folders/${item._id}/forms`,
+                `http://localhost:4000/api/forms/${item}/forms`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
@@ -159,7 +164,7 @@ const FormDashboard = () => {
             if (response.data.forms.length > 0) {
                 localStorage.setItem("formId", response.data.forms[0]._id);
             }
-       
+
         } catch (error) {
             console.error("Error fetching forms:", error);
             toast.error("Error fetching forms");
@@ -170,7 +175,7 @@ const FormDashboard = () => {
     const handleDeleteForm = async () => {
         try {
             await axios.delete(
-                `http://localhost:4000/api/folders/form/${formId}`,
+                `http://localhost:4000/api/forms/form/${formId}`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
@@ -248,7 +253,7 @@ const FormDashboard = () => {
                             <div className={style.Folder}>
                                 <span onClick={handleAddFolder}><i className="fa-solid fa-folder-plus"></i>Create a folder</span>
                                 {createFolders.map((folder, index) => (
-                                    <div key={index} className={style.New_folder} onClick={() => { handlegetForms(folder) }}>
+                                    <div key={index} className={style.New_folder} onClick={() => { handlegetForms(folder._id) }}>
                                         {folder.name}
                                         <i className="fa-solid fa-trash-can" onClick={() => handleFolderClick(folder._id)}></i>
                                     </div>
@@ -261,9 +266,11 @@ const FormDashboard = () => {
                                 </div>
 
                                 {newForm.map((form, index) => (
-                                    <div key={index} className={style.New_folderForm} onClick={() => navigate(`/workspace`)}>
-                                        <i className="fa-solid fa-trash-can" onClick={(e) => {handleFormId(form._id)
-                                            e.stopPropagation()}
+                                    <div key={index} className={style.New_folderForm} onClick={()=>handlegetFormId(form._id)}>
+                                        <i className="fa-solid fa-trash-can" onClick={(e) => {
+                                            handleFormId(form._id)
+                                            e.stopPropagation()
+                                        }
                                         } ></i>
                                         <h3>{form.name || "Unnamed Form"}</h3>
                                     </div>
