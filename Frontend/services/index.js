@@ -1,4 +1,4 @@
-const URL = 'http://localhost:4000/api';
+const URL = 'apiUrl/api';
 
 // backend services userRegister
 export const userRegister = async (data) => {
@@ -22,17 +22,6 @@ export const userLogin = async (data) => {
     })
 };
 
-// create folder service
-// export const createFolder = async (data) => {
-//     return await fetch(`${URL}/folders/create-folder`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': 'Bearer ' + localStorage.getItem('token')
-//         },
-//         body: JSON.stringify(data)
-//     })
-// };
 
 // get folders
 export const getFolder = async () => {

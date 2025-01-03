@@ -7,6 +7,10 @@ import logo from '../../assets/google.png';
 import Polygon1 from '../../assets/Polygon1.png';
 import Polygon2 from '../../assets/Polygon2.png';
 
+const apiUrl = import.meta.env.VITE_API_URI;
+
+console.log(apiUrl);
+
 const Register = () => {
     const navigate = useNavigate();
     const [registerForm, setRegisterForm] = useState({
