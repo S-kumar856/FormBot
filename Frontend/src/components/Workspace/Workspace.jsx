@@ -20,13 +20,15 @@ const Workspace = () => {
 
     const { folderId, formId } = useParams();
 
+    const apiUrl = import.meta.env.VITE_API_URI;
+
     // Fetch form data when the component mounts
     useEffect(() => {
         const fetchFormData = async () => {
             try {
                 if (formId) {
                     const response = await axios.get(
-                        `http://localhost:4000/api/forms/form/${formId}`,
+                        `${apiUrl}/api/forms/form/${formId}`,
                         {
                             headers: {
                                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -103,7 +105,7 @@ const Workspace = () => {
                 }
 
                 const response = await axios.post(
-                    `http://localhost:4000/api/folders/create-form-bot`, // POST request to save  the form 
+                    `${apiUrl}/api/folders/create-form-bot`, // POST request to save  the form 
                     {
                         folderId: folderId, // folder where formbot should be save
                         formBotName: formName, // Form name
@@ -137,7 +139,7 @@ const Workspace = () => {
     const updateForm = async () => {
         try {
             const response = await axios.put(
-                `http://localhost:4000/api/forms/form/${formId}`, // PUT request to update the form by formId
+                `${apiUrl}/api/forms/form/${formId}`, // PUT request to update the form by formId
                 {
                     folderId: folderId, // folder where formbot should be update
                     formBotName: formName, // Form name
@@ -163,7 +165,7 @@ const Workspace = () => {
         console.log("hello");
         try {
             const response = await axios.post(
-                `http://localhost:4000/api/forms/share/${fId}`,
+                `${apiUrl}/api/forms/share/${fId}`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }

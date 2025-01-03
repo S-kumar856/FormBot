@@ -20,9 +20,7 @@ const FormDashboard = () => {
     const [foldersId,setFoldersId] = useState(null);
     const [formid,setFormid] = useState(null);
 
-
-
-
+    const apiUrl = import.meta.env.VITE_API_URI;
     // dark and light mode
     const { theme, toggleTheme } = useTheme();
 
@@ -42,7 +40,7 @@ const FormDashboard = () => {
     const fetchUser = async () => {
         try {
             const response = await axios.get(
-                "http://localhost:4000/api/user/getUser",
+                `${apiUrl}/api/user/getUser`,
                 {
                     headers: {
                         Authorization: ` Bearer ${localStorage.getItem("token")}`,
@@ -63,7 +61,7 @@ const FormDashboard = () => {
         try {
           
             const response = await axios.get(
-                "http://localhost:4000/api/folders/folders/:id",
+               ` ${apiUrl}/api/folders/folders/:id`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
@@ -91,7 +89,7 @@ const FormDashboard = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:4000/api/folders/create-folder",
+                `${apiUrl}/api/folders/create-folder`,
                 { name: createInput },
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -122,7 +120,7 @@ const FormDashboard = () => {
     const handleDeleteFolder = async () => {
         try {
             await axios.delete(
-                `http://localhost:4000/api/folders/folder/${foldersId}`,
+                `${apiUrl}/api/folders/folder/${foldersId}`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
@@ -171,7 +169,7 @@ const FormDashboard = () => {
 
         try {
             const response = await axios.get(
-                `http://localhost:4000/api/forms/${item}/forms`,
+                `${apiUrl}/api/forms/${item}/forms`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
@@ -192,7 +190,7 @@ const FormDashboard = () => {
     const handleDeleteForm = async () => {
         try {
             await axios.delete(
-                `http://localhost:4000/api/forms/form/${formid}`,
+                `${apiUrl}/api/forms/form/${formid}`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }

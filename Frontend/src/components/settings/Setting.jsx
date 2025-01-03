@@ -9,6 +9,9 @@ const Setting = () => {
     const [showEmail, setShowEmail] = useState(false);
     const [showOldPassword, setShowOldPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
+    const apiUrl = import.meta.env.VITE_API_URI;
+
+   
 
     const [settingData, setSettingData] = useState({
         username: "",
@@ -24,7 +27,7 @@ const Setting = () => {
     const fetchUser = async () => {
         try {
             const response = await axios.get(
-                "http://localhost:4000/api/user/getUser",
+               `${apiUrl}/api/user/getUser`,
                 {
                     headers: {
                         Authorization: ` Bearer ${localStorage.getItem("token")}`,
@@ -67,7 +70,7 @@ const Setting = () => {
 
         try {
             const response = await axios.put(
-                "http://localhost:4000/api/user/updateUser",
+                `${apiUrl}/api/user/updateUser`,
                 updatedFields,
                 {
                     headers: {

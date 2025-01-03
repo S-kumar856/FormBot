@@ -11,6 +11,8 @@ const ChatbotForm = () => {
   const [currentFieldIndex, setCurrentFieldIndex] = useState(0);
   const [formCompleted, setFormCompleted] = useState(false);
   const [currentValue, setCurrentValue] = useState(''); // To store current input value
+  const apiUrl = import.meta.env.VITE_API_URI;
+
 
   const {linkId} = useParams();
 
@@ -18,7 +20,7 @@ const ChatbotForm = () => {
     // Fetch form data from the backend using Axios
     const fetchFormData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/forms/share/${linkId}`);
+        const response = await axios.get(`${apiUrl}/api/forms/share/${linkId}`);
         if (response.data.success) {
           setForm(response.data.form);
         } else {
@@ -78,7 +80,7 @@ const ChatbotForm = () => {
   // Submit form data to backend
   const submitForm = async (finalResponses) => {
     try {
-      const response = await axios.post('http://localhost:4000/api/forms/save-response', {
+      const response = await axios.post(`${apiUrl}/api/forms/save-response`, {
         formId: form._id,
         responses: finalResponses, // Submit the final set of responses
       });
@@ -168,57 +170,7 @@ const ChatbotForm = () => {
         )}
       </div>
     </div>
-    // <div className={style.chatbotContainer}>
-    //   {/* <h2>{form.name}</h2> */}
-    //   <div className={style.chatbot_innerContainer}>
-    //     {/* Render all previous responses as a chat */}
-    //     {responses.map((response, index) => (
-    //       <div key={index} className={style.chatbot_response}>
-    //       {}
-    //       <div key={index} className={style.botBubble}>
-    //         <span>{response.type === 'bubble' ? '' : 'You'}: </span>
-    //         <p>{response.answer}</p>
-    //       </div>
-    //       </div>
-    //     ))}
-
-
-    //     {/* Render the current field based on its type */}
-    //     {currentField.type === 'bubble' ? (
-    //       <div>
-    //         <p>{currentField.label}</p>
-    //         {/* The field will automatically proceed without clicking */}
-    //         <p>{currentField.value}</p>
-    //       </div>
-    //     ) : (
-    //       <div className={style.userChat_content}>
-    //         {/* <label>{currentField.label}</label> */}
-    //         <input
-    //           type={currentField.inputType}
-    //           placeholder={`Enter your ${currentField.label.toLowerCase()}`}
-    //           value={currentValue}
-    //           onChange={(e) => setCurrentValue(e.target.value)}
-    //         />
-    //         <button
-    //           onClick={() => {
-    //             handleInputSubmit(currentValue);
-    //             setCurrentValue(''); // Clear input field after submission
-    //           }}
-    //         >
-    //         <img src={send} alt="send" />
-    //         </button>
-    //       </div>
-
-    //     )}
-
-    //     {/* Show Thank You message only if form is completed */}
-    //     {formCompleted && (
-    //       <div className={style.formbot_thakyou}>
-    //         <h3>Thank you for filling out the form!</h3>
-    //       </div>
-    //     )}
-    //   </div>
-    // </div>
+   
   );
 };
 
