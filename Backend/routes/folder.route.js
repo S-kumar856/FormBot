@@ -21,7 +21,7 @@ router.get('/folders/:folderId/forms',auth, getFormsByFolderId);
 
 router.get('/form/:formId', getFormById);
 
-router.put('/form/:formId', updateFormById);
+// router.put('/form/:formId', updateFormById);
 
 router.delete('/folder/:folderId', deleteFolderById);
 router.delete('/form/:formId', deleteFormById);

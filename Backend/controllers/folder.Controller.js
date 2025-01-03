@@ -192,41 +192,41 @@ exports.getFormById = async (req, res) => {
 
 
 
-exports.updateFormById = async (req, res) => {
-  const { formId } = req.params;  // Get formId from request params
-  const { formBotName, fields } = req.body; // Get form name and fields to be updated
-  console.log('Form ID:', formId);
-  try {
-    // Step 1: Find the form by ID
-    const form = await FormBot.findById(formId);
-    if (!form) {
-      return res.status(404).json({
-        success: false,
-        message: 'Form not found',
-      });
-    }
+// exports.updateFormById = async (req, res) => {
+//   const { formId } = req.params;  // Get formId from request params
+//   const { formBotName, fields } = req.body; // Get form name and fields to be updated
+//   console.log('Form ID:', formId);
+//   try {
+//     // Step 1: Find the form by ID
+//     const form = await FormBot.findById(formId);
+//     if (!form) {
+//       return res.status(404).json({
+//         success: false,
+//         message: 'Form not found',
+//       });
+//     }
 
-    // Step 2: Update form data
-    form.name = formBotName || form.name; // Update name if provided
-    form.fields = fields;  // Update the fields (bubbles and inputs)
+//     // Step 2: Update form data
+//     form.name = formBotName || form.name; // Update name if provided
+//     form.fields = fields;  // Update the fields (bubbles and inputs)
 
-    // Step 3: Save the updated form
-    await form.save();
+//     // Step 3: Save the updated form
+//     await form.save();
 
-    // Step 4: Respond with success
-    res.status(200).json({
-      success: true,
-      message: 'Form updated successfully!',
-      form: form,
-    });
-  } catch (error) {
-    console.error('Error updating form:', error.message);
-    res.status(500).json({
-      success: false,
-      message: 'Error updating form',
-    });
-  }
-};
+//     // Step 4: Respond with success
+//     res.status(200).json({
+//       success: true,
+//       message: 'Form updated successfully!',
+//       form: form,
+//     });
+//   } catch (error) {
+//     console.error('Error updating form:', error.message);
+//     res.status(500).json({
+//       success: false,
+//       message: 'Error updating form',
+//     });
+//   }
+// };
 
 
 exports.deleteFolderById = async (req, res) => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import style from './ChatBot.module.css';
 
 const ChatbotForm = () => {
   const [form, setForm] = useState(null);
@@ -109,17 +110,17 @@ const ChatbotForm = () => {
   const currentField = form.fields[currentFieldIndex];
 
   return (
-    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
-      <h2>{form.name}</h2>
-      <div style={{ maxHeight: '400px', overflowY: 'auto', marginBottom: '20px' }}>
+    <div className={style.chatbotContainer}>
+      {/* <h2>{form.name}</h2> */}
+      <div className={style.chatbot_innerContainer}>
         {/* Render all previous responses as a chat */}
         {responses.map((response, index) => (
-          <div key={index} style={{ marginBottom: '10px' }}>
-            <strong>{response.type === 'bubble' ? 'Chatbot' : 'You'}: </strong>
-            <span>{response.answer}</span>
+          <div key={index} className={style.bot}>
+            <span>{response.type === 'bubble' ? '' : 'You'}: </span>
+            <p>{response.answer}</p>
           </div>
         ))}
-      </div>
+   
 
       {/* Render the current field based on its type */}
       {currentField.type === 'bubble' ? (
@@ -129,12 +130,12 @@ const ChatbotForm = () => {
           <p>{currentField.value}</p>
         </div>
       ) : (
-        <div>
-          <label>{currentField.label}</label>
+        <div className={style.userChat_content}>
+          {/* <label>{currentField.label}</label> */}
           <input
             type={currentField.inputType}
             placeholder={`Enter your ${currentField.label.toLowerCase()}`}
-            style={{ marginBottom: '10px', padding: '5px', width: '100%' }}
+            style={{ marginBottom: '10px', padding: '5px', width: '100%', }}
             value={currentValue}
             onChange={(e) => setCurrentValue(e.target.value)}
           />
@@ -148,6 +149,7 @@ const ChatbotForm = () => {
             Send
           </button>
         </div>
+        
       )}
 
       {/* Show Thank You message only if form is completed */}
@@ -156,6 +158,7 @@ const ChatbotForm = () => {
           <h3>Thank you for filling out the form!</h3>
         </div>
       )}
+    </div>
     </div>
   );
 };

@@ -9,6 +9,23 @@ const Setting = () => {
     const [showOldPassword, setShowOldPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
 
+    const [settingData, setSettingData] = useState({
+        userName:"",
+        email:"",
+        oldPassword:"",
+        newPassword:"",
+    })
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setSettingData({...settingData, [name]: value});
+    }
+
+    const handleSubmit = (e) => {
+        e.prevetDefault();
+
+    }
+
 
     const logout = () => {
         // Clear user-related data (e.g., token, userId) from localStorage
@@ -27,10 +44,14 @@ const Setting = () => {
         <div className={styles.settingsContainer}>
             <div className={styles.settings}>
                 <h1 className={styles.title}>Settings</h1>
-                <form className={styles.settingsForm}>
+                <form className={styles.settingsForm} onSubmit={handleSubmit}>
                     <div className={styles.inputWrapper}>
                         <i className={`fas fa-user ${styles.icon}`}></i>
-                        <input className={styles.input} type="text" placeholder="Name" />
+                        <input className={styles.input} type="text" 
+                        name='userName'
+                        value={settingData.userName}
+                        onChange={handleChange}
+                        placeholder="Name" />
                     </div>
 
                     <div className={styles.inputWrapper}>
@@ -38,6 +59,9 @@ const Setting = () => {
                         <input
                             className={styles.input}
                             type={showEmail ? "text" : "password"}
+                            name="email"
+                            value={settingData.email}
+                            onChange={handleChange}
                             placeholder="Update Email"
                         />
                         <i
@@ -51,6 +75,9 @@ const Setting = () => {
                         <input
                             className={styles.input}
                             type={showOldPassword ? "text" : "password"}
+                            name="oldPassword"
+                            value={settingData.oldPassword}
+                            onChange={handleChange}
                             placeholder="Old Password"
                         />
                         <i
@@ -64,6 +91,9 @@ const Setting = () => {
                         <input
                             className={styles.input}
                             type={showNewPassword ? "text" : "password"}
+                            name="newPassword"
+                            value={settingData.newPassword}
+                            onChange={handleChange}
                             placeholder="New Password"
                         />
                         <i
@@ -72,7 +102,7 @@ const Setting = () => {
                         ></i>
                     </div>
 
-                    <button className={styles.updateButton}>Update</button>
+                    <button className={styles.updateButton} type='submit'>Update</button>
                 </form>
             </div>
             <div className={styles.logout}>

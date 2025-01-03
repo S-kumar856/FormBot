@@ -84,44 +84,50 @@ const Workspace = () => {
 
     // Handle saving the form data
     const saveForm = async () => {
-        try {
-            const selectedFolderId = localStorage.getItem("folderId"); // Retrieve the folder ID from localStorage
-            console.log(formId)
-            console.log(fields)
+        console.log(fields.length);
+        if (formId === null) {
+            console.log("save");
 
-
-            if (!selectedFolderId) {
-                alert("Please select a folder to save the form bot.");
-                return;
-            }
-
-            const response = await axios.post(
-                `http://localhost:4000/api/folders/create-form-bot`, // POST request to save  the form 
-                {
-                    folderId: selectedFolderId, // folder where formbot should be save
-                    formBotName: formName, // Form name
-                    fields: fields, // Updated fields (contains both bubbles and inputs)
-                },
-                {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            try {
+                const selectedFolderId = localStorage.getItem("folderId"); // Retrieve the folder ID from localStorage
+               
+                if (!selectedFolderId) {
+                    alert("Please select a folder to save the form bot.");
+                    return;
                 }
-            );
-
-            console.log(response.data.formBot.name);
-
-            if (response.data.success) {
-
-                localStorage.setItem("formId", response.data.formBot._id); // Save the new formId in localStorage
-                toast.success("Form Saved successfully!");
-
-                // Reset form state for a new form
-                setFormName("");
-                setFields([]);
-              
+    
+                const response = await axios.post(
+                    `http://localhost:4000/api/folders/create-form-bot`, // POST request to save  the form 
+                    {
+                        folderId: selectedFolderId, // folder where formbot should be save
+                        formBotName: formName, // Form name
+                        fields: fields, // Updated fields (contains both bubbles and inputs)
+                    },
+                    {
+                        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                    }
+                );
+    
+                console.log(response.data.formBot.name);
+    
+                if (response.data.success) {
+    
+                    localStorage.setItem("formId", response.data.formBot._id); // Save the new formId in localStorage
+                    toast.success("Form Saved successfully!");
+    
+                    // Reset form state for a new form
+                    setFormName("");
+                    setFields([]);
+                  
+                }
+            } catch (error) {
+                console.error("Error Saving form:", error);
+                toast.error("Error Saving form");
             }
-        } catch (error) {
-            console.error("Error Saving form:", error);
-            toast.error("Error Saving form");
+        } else {
+            updateForm();
+            console.log("update");
+            
         }
     };
 
