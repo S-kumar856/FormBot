@@ -1,4 +1,6 @@
-const URL = 'apiUrl/api';
+const apiUrl = import.meta.env.VITE_API_URI;
+
+const URL = `${apiUrl}/api`;
 
 // backend services userRegister
 export const userRegister = async (data) => {
