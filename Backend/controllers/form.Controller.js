@@ -224,10 +224,10 @@ try {
   // If this is the first response (form is being started), increment the 'started' count
   if (responses && responses.length > 0) {
     // Check if it's the first response to trigger the 'started' increment
-    if (form.started === 0) {
-      form.started += 1;
+     
+      form.startedCount += 1;
       await form.save();
-    }
+    
   }
 
   // Save the form responses
@@ -241,7 +241,7 @@ try {
   // Increment 'submitted' only if all responses are filled (form is completely submitted)
   const allResponsesSubmitted = responses.every(response => response.value !== undefined && response.value !== null);
   if (allResponsesSubmitted) {
-    form.submitted += 1;
+    form.submittedCount += 1;
     await form.save();
   }
 
@@ -250,4 +250,26 @@ try {
   console.error('Error saving form responses:', error);
   res.status(500).json({ success: false, message: 'Server error' });
 }
+};
+
+exports.getFormResponses = async (req, res) => {
+  try {
+    const { formId } = req.params;
+    console.log("Form ID:", formId);
+    
+    // Find all responses for the given formId
+    const formResponses = await FormResponse.find({ form: formId }).populate('form');
+
+    if (!formResponses || formResponses.length === 0) {
+      return res.status(404).json({ success: false, message: "No responses found for this form" });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: formResponses,
+    });
+  } catch (error) {
+    console.error("Error fetching form responses:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
 };

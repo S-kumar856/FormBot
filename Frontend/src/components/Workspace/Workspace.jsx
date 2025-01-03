@@ -3,16 +3,22 @@ import { useState, useEffect } from 'react';
 import style from './Workspace.module.css';
 import axios from 'axios';
 import { useTheme } from '../theme-context';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import T from '../../assets/T.png';
+// import gif from '../../assets/gif.png';
+import Response from '../ResponsePage/Response';
 
 const Workspace = () => {
     const navigate = useNavigate()
     const { theme, toggleTheme } = useTheme();
     const [fields, setFields] = useState([]);
+    const [formResponse, setFormResponse] = useState([]);
     const [formName, setFormName] = useState("");
-    const formId = localStorage.getItem("formId"); // Get formId from localStorage or from URL parameters
-    console.log("Form ID:", formId);
+    const [fId, setformId] = useState(null);
+    const [showResponse, setShowResponse] = useState(true);
+
+    const { folderId, formId } = useParams();
 
     // Fetch form data when the component mounts
     useEffect(() => {
@@ -32,6 +38,7 @@ const Workspace = () => {
 
                         setFormName(form.name); // Set form name
                         setFields(form.fields); // Set the form fields (bubbles and inputs)
+                        setFormResponse([response.data.form]); // Set the form response data
                     }
                     else {
                         // Reset state if no formId exists
@@ -43,7 +50,7 @@ const Workspace = () => {
                 }
             } catch (error) {
                 console.error("Error fetching form data:", error);
-                toast.error("Error fetching form data");
+                // toast.error("Error fetching form data");
 
             }
         };
@@ -85,21 +92,20 @@ const Workspace = () => {
     // Handle saving the form data
     const saveForm = async () => {
         console.log(fields.length);
-        if (formId === null) {
+        if (formId) {  
             console.log("save");
 
             try {
-                const selectedFolderId = localStorage.getItem("folderId"); // Retrieve the folder ID from localStorage
-               
-                if (!selectedFolderId) {
+            
+                if (!folderId) {
                     alert("Please select a folder to save the form bot.");
                     return;
                 }
-    
+
                 const response = await axios.post(
                     `http://localhost:4000/api/folders/create-form-bot`, // POST request to save  the form 
                     {
-                        folderId: selectedFolderId, // folder where formbot should be save
+                        folderId: folderId, // folder where formbot should be save
                         formBotName: formName, // Form name
                         fields: fields, // Updated fields (contains both bubbles and inputs)
                     },
@@ -107,18 +113,14 @@ const Workspace = () => {
                         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                     }
                 );
-    
+
                 console.log(response.data.formBot.name);
-    
+
                 if (response.data.success) {
-    
-                    localStorage.setItem("formId", response.data.formBot._id); // Save the new formId in localStorage
+
+                    setformId(response.data.formBot._id);
                     toast.success("Form Saved successfully!");
-    
-                    // Reset form state for a new form
-                    setFormName("");
-                    setFields([]);
-                  
+
                 }
             } catch (error) {
                 console.error("Error Saving form:", error);
@@ -127,19 +129,17 @@ const Workspace = () => {
         } else {
             updateForm();
             console.log("update");
-            
+
         }
     };
 
     // Handle saving the updated form data
     const updateForm = async () => {
         try {
-            const selectedFolderId = localStorage.getItem("folderId"); // Retrieve the folder ID from localStorage
-
             const response = await axios.put(
                 `http://localhost:4000/api/forms/form/${formId}`, // PUT request to update the form by formId
                 {
-                    folderId: selectedFolderId, // folder where formbot should be update
+                    folderId: folderId, // folder where formbot should be update
                     formBotName: formName, // Form name
                     fields: fields, // Updated fields (contains both bubbles and inputs)
                 },
@@ -161,18 +161,19 @@ const Workspace = () => {
     // Handle generating a shareable link
     const shareForm = async () => {
         console.log("hello");
-        const id = localStorage.getItem("formId");
         try {
             const response = await axios.post(
-                `http://localhost:4000/api/forms/share/${id}`,
+                `http://localhost:4000/api/forms/share/${fId}`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
             );
             console.log("Form link:", response.data.linkId);
-            localStorage.setItem("formId", formId);
             localStorage.setItem("linkId", response.data.linkId);
-            alert("Form link generated!");
+            const link = `http://localhost:5173/chatbot/${response.data.linkId}`;
+            navigator.clipboard.writeText(link);
+            alert('Link copied to clipboard:' + link);
+            
         } catch (error) {
             console.error("Error sharing form:", error);
         }
@@ -180,9 +181,8 @@ const Workspace = () => {
 
     // clearing formfield and navigate to formdashboard
     const handleCross = () => {
-        setFields([])// Clear form fields
-        setFormName(""); // Clear form name
-        localStorage.removeItem("formId"); // Optional: Clear formId from localStorage
+        // setFields([])// Clear form fields
+        // setFormName(""); // Clear form name
         navigate("/formdashboard"); // Navigate to FormDashboard
 
     }
@@ -203,8 +203,8 @@ const Workspace = () => {
                     </div>
 
                     <div className={style.Workspace_Theme}>
-                        <button className={style.Workspace_flowbtn}>Flow</button>
-                        <button className={style.Workspace_Responsebtn}>Response</button>
+                        <button className={style.Workspace_flowbtn} onClick={()=>setShowResponse(true)}>Flow</button>
+                        <button className={style.Workspace_Responsebtn} onClick={()=>setShowResponse(false)}>Response</button>
                     </div>
                     <div className={style.Workspace_NavbarBtns}>
                         <div className={style.dark}>
@@ -227,7 +227,7 @@ const Workspace = () => {
                     </div>
                 </div>
 
-                <div className={style.Workspace_content}>
+                {showResponse ? (<div className={style.Workspace_content}>
                     <div className={style.Workspace_Leftpanel}>
                         <div className={style.sidebar}>
                             <div className={style.bubble}>
@@ -235,11 +235,11 @@ const Workspace = () => {
                                 <button onClick={() => addBubble("Text")}><i className="fa-regular fa-message"></i>Text</button>
                                 <button onClick={() => addBubble("Image")}><i className="fa-regular fa-image"></i>Image</button>
                                 <button onClick={() => addBubble("Video")}><i className="fa-solid fa-film"></i>Video</button>
-                                <button onClick={() => addBubble("GIF")}><i className="fa-solid fa-gif"></i>GIF</button>
+                                <button onClick={() => addBubble("GIF")}>GIF</button>
                             </div>
                             <div className={style.inputes}>
                                 <h3>Input Fields</h3>
-                                <button onClick={() => addInput("text")}>Text</button>
+                                <button onClick={() => addInput("text")}><img src={T} alt="Textimg"/> Text</button>
                                 <button onClick={() => addInput("number")}><i className="fa-regular fa-hashtag"></i>Number</button>
                                 <button onClick={() => addInput("email")}><i className="fa-regular fa-at"></i>Email</button>
                                 <button onClick={() => addInput("number")}><i className="fa-solid fa-phone"></i>Phone</button>
@@ -284,7 +284,11 @@ const Workspace = () => {
                             ))}
                         </div>
                     </div>
-                </div>
+                </div>) : (
+                    <Response forms={formResponse} />
+                )}
+
+                
             </div>
         </>
     )

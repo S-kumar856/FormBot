@@ -13,15 +13,14 @@ import ChatbotForm from './components/ChatBotPage/ChatBot';
 const App = () => {
   return (
     <>
-
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<Register  />} />
           <Route path="/login" element={<Login />} />
           <Route path="/Formdashboard" element={<FormDashboard />} />
           <Route path='/setting' element={<Setting />} />
-          <Route path='/workspace' element={<Workspace />} />
-          <Route path='/chatbot' element={<ChatbotForm/>} />
+          <Route path='/workspace/:folderId/:formId' element={<Workspace />} />
+          <Route path='/chatbot/:linkId' element={<ChatbotForm/>} />
         </Routes>
 
     </>

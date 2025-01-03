@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import style from './FormDashboard.module.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from '../theme-context';
 import { toast } from 'react-toastify';
-
 import axios from 'axios';
 
 const FormDashboard = () => {
@@ -16,15 +15,20 @@ const FormDashboard = () => {
     const [NewFormToDelete, setNewFormToDelete] = useState(null);
     const [createInput, setCreateInput] = useState('')
     const [createFolders, setCreateFolders] = useState([]);
-
+    const [userName, setUserName] = useState('');
     const [newForm, setNewForm] = useState([]);
+    const [foldersId,setFoldersId] = useState(null);
+    const [formid,setFormid] = useState(null);
+
+
 
 
     // dark and light mode
     const { theme, toggleTheme } = useTheme();
 
-    // getting folderid from the local storage
-    const folderId = localStorage.getItem('folderId')
+    // getting folderid and formid
+
+    let {folderId, formId} = useParams();
 
     // targeting the input
     const handleInputChange = (e) => {
@@ -35,12 +39,29 @@ const FormDashboard = () => {
         setCreateShowModal(true);
     };
 
+    const fetchUser = async () => {
+        try {
+            const response = await axios.get(
+                "http://localhost:4000/api/user/getUser",
+                {
+                    headers: {
+                        Authorization: ` Bearer ${localStorage.getItem("token")}`,
+                    },
+                }
+            );
+            const user = response.data.user;
+            setUserName(user.username);
+        } catch (error) {
+            console.error("Failed to fetch user data", error);
+        }
+    };
+
 
 
     // fetching folders from backend
     const fetchFolders = async () => {
         try {
-            const token = localStorage.getItem("token");
+          
             const response = await axios.get(
                 "http://localhost:4000/api/folders/folders/:id",
                 {
@@ -58,6 +79,7 @@ const FormDashboard = () => {
 
     useEffect(() => {
         fetchFolders();
+        fetchUser();
     }, [])
 
 
@@ -89,7 +111,8 @@ const FormDashboard = () => {
 
     // accessign the folder folder id using the function
     const handleFolderClick = (index) => {
-        localStorage.setItem("folderId", index)
+
+        setFoldersId(index)
         setFolderToDelete(index);
         setConfirmDeleteModel(true);
 
@@ -99,13 +122,13 @@ const FormDashboard = () => {
     const handleDeleteFolder = async () => {
         try {
             await axios.delete(
-                `http://localhost:4000/api/folders/folder/${folderId}`,
+                `http://localhost:4000/api/folders/folder/${foldersId}`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
             );
             // Remove deleted folder from the list
-            const updatedFolder = createFolders.filter((folder) => folder._id !== folderId)
+            const updatedFolder = createFolders.filter((folder) => folder._id !== foldersId)
             setCreateFolders(updatedFolder);// Update the state
             setConfirmDeleteModel(false);
             toast.success("Folder deleted successfully");
@@ -127,30 +150,24 @@ const FormDashboard = () => {
     // ---------------------------------------------------------------------------------------
 
     // handling forms
-    const handlegetFormId = (id) => {
-        localStorage.setItem("formId", id);
-        navigate("/workspace");
+    const handlegetFormId = (formId) => {
+        navigate(`/workspace/${foldersId}/${formId}`);
     }
     const handleFormId = (id) => {
-        localStorage.setItem("formId", id);
+        setFormid(id);
         setNewFormToDelete(id);
         setConfirmDeleteFormModel(true)
     };
 
-    // form id 
-    const formId = localStorage.getItem('formId')
-
-
     // Create Form in a specific folder and navigate to form creation
     const handleCreateForm = () => {
-        // localStorage.removeItem("formId"); // Clear form ID from localStorage
-        localStorage.setItem("folderId", folderId); // Save folder ID for form creation
-        navigate("/workspace"); // Navigate to the form creation page
+   
+        navigate(`/workspace/${foldersId}/${formId}`); // Navigate to the form creation page
     };
 
     // get forms
     const handlegetForms = async (item) => {
-        localStorage.setItem("folderId", item);
+        setFoldersId(item)
 
         try {
             const response = await axios.get(
@@ -175,13 +192,13 @@ const FormDashboard = () => {
     const handleDeleteForm = async () => {
         try {
             await axios.delete(
-                `http://localhost:4000/api/forms/form/${formId}`,
+                `http://localhost:4000/api/forms/form/${formid}`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
             );
             // Remove deleted form from the list
-            setNewForm(newForm.filter((form) => form._id !== formId));
+            setNewForm(newForm.filter((form) => form._id !== formid));
             setConfirmDeleteFormModel(false)
             toast.success("Form deleted successfully");
         } catch (error) {
@@ -208,7 +225,6 @@ const FormDashboard = () => {
         localStorage.removeItem("formId");
         localStorage.removeItem("folderId");
 
-        // Optionally clear any other application state here if needed
         toast.success("Logged out successfully!");
 
         // Navigate to the login page
@@ -223,7 +239,7 @@ const FormDashboard = () => {
                 <div className={style.workspace_Navbar}>
                     <div className={style.navbar}>
                         <select name="dropdown" id="dropdown" onChange={handleSetting}>
-                            <option value="name">Kumar workspace</option>
+                            <option value="name">{userName}  workspace</option>
                             <option value="setting" className={style.setting}>Settings</option>
                             <option value="logout" className={style.logout}>Log Out</option>
                         </select>

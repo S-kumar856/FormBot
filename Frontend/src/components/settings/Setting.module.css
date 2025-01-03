@@ -1,7 +1,17 @@
+[data-theme="light"]{
+  --bg-color:#ffffff;
+  --text-color:#000000;
+}
+
+[data-theme="dark"]{
+  --bg-color : #1e1e1e;
+  --text-color:#FFFFFFEB;
+}
+
 .settingsContainer {
   width: 100vw;
   height: 100vh;
-  background-color: #1e1e1e;
+  background-color: var(--bg-color); ;
 }
 
 .settings{
@@ -13,7 +23,7 @@
 }
 
 .title {
-  color: white;
+  color: var(--text-color);
   margin-bottom: 20px;
   font-weight: 400;
   font-family: Open sans;
@@ -37,7 +47,7 @@
   padding: 12px;
   border-radius: 5px;
   font-size: 16px;
-  color: white;
+  color: var(--text-color);
   padding-left: 45px;
 }
 

@@ -11,6 +11,7 @@
 .Main_Container{
     width: 100vw;
     height: 100vh;
+    min-height: 100%;
     max-width: 100%;               
     background: var(--bg-color);
     color: var(--text-color);                  
@@ -138,49 +139,32 @@
     font-weight: 600;
     font-size: 1rem;
     background: var(--bg-color);
-    
- 
 }
-option{
- 
-    /* color: var(--text-color); */
-    /* background-color: #121212; */
-}
+
 .logout{
     color: #FFA54C;
 }
 
 /* creating folder */
 
-.Main_Createrfolder{
-    /* width: 100vw; */
-    /* position: relative; */
-  
-}
 .Ineercreate_folder{
     position: absolute;
     /* background-color: red; */
     
 }
 .Create_Folder{
-    /* width: 100vw; */
-    /* max-width: 100%; */
-    /* height: 100vh; */
     padding-left: 250px;
     padding-top: 30px;
     display: flex;
     flex-direction: column;
     gap: 30px;
     z-index: 0;
-    /* background: linear-gradient(#121212, #171923, #171923);   */
-    /* background-color: red; */
-
-
 }
 
 .Folder{
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }
 .Folder span{
     padding: 10px;
@@ -247,30 +231,26 @@ option{
 .Folder_Form{
     display: flex;
     gap: 1vw;
+    flex-wrap: wrap;
 }
 
 .New_folderForm{
     border: none;
     width: 13vw;
     height: 15vw;
-    color: #FFFFFFEB;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 7vh;
-    background-color: #FFFFFF80;
+    background-color: #ccccccad;
     border-radius: 6px;
     cursor: pointer;
 
 }
-/* .New_folderForm{
-   display: flex;
-   justify-content: center;
-   align-items: center;
-} */
+
 .New_folderForm h3{
-    color: #FFFFFF;
+    color: var(--text-color);
     font-family: Open sans;
     font-size: 1rem;
     font-weight: 400;

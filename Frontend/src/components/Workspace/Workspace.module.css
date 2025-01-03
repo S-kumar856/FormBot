@@ -14,7 +14,8 @@
 .Workspace_Main_Container {
   width: 100vw;
   max-width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 100%;
   background-color: var(--bg-color);
   color: var(--text-color);
   display: flex;
@@ -232,6 +233,11 @@ input:checked + .slider:before {
   margin-right: 10px;
 }
 
+.bubble img{
+  background-color: red;
+
+}
+
 .inputes h3 {
   font-family: Open sans;
   font-weight: 600;
@@ -253,6 +259,13 @@ input:checked + .slider:before {
   color: var(--text-color);
   margin: 8px;
   text-align: start;
+  /* display: flex;
+  align-items: center;  */
+}
+
+.inputes img{
+  margin-right: 5px;
+  
 }
 
 .inputes button i {

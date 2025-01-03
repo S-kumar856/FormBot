@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import style from './ChatBot.module.css';
+import send from '../../assets/send.png';
+import { useParams } from 'react-router-dom';
+import profile from '../../assets/chatProfile.jpg';
 
 const ChatbotForm = () => {
   const [form, setForm] = useState(null);
@@ -9,7 +12,7 @@ const ChatbotForm = () => {
   const [formCompleted, setFormCompleted] = useState(false);
   const [currentValue, setCurrentValue] = useState(''); // To store current input value
 
-  const linkId = localStorage.getItem('linkId'); // Get linkId from localStorage
+  const {linkId} = useParams();
 
   useEffect(() => {
     // Fetch form data from the backend using Axios
@@ -110,56 +113,112 @@ const ChatbotForm = () => {
   const currentField = form.fields[currentFieldIndex];
 
   return (
-    <div className={style.chatbotContainer}>
-      {/* <h2>{form.name}</h2> */}
-      <div className={style.chatbot_innerContainer}>
-        {/* Render all previous responses as a chat */}
-        {responses.map((response, index) => (
-          <div key={index} className={style.bot}>
-            <span>{response.type === 'bubble' ? '' : 'You'}: </span>
-            <p>{response.answer}</p>
-          </div>
-        ))}
-   
-
-      {/* Render the current field based on its type */}
-      {currentField.type === 'bubble' ? (
+    <div className={style.container}>
+      <div className={style.chatContainer}>
+        <h2>{form.name}</h2>
         <div>
-          <p>{currentField.label}</p>
-          {/* The field will automatically proceed without clicking */}
-          <p>{currentField.value}</p>
-        </div>
-      ) : (
-        <div className={style.userChat_content}>
-          {/* <label>{currentField.label}</label> */}
-          <input
-            type={currentField.inputType}
-            placeholder={`Enter your ${currentField.label.toLowerCase()}`}
-            style={{ marginBottom: '10px', padding: '5px', width: '100%', }}
-            value={currentValue}
-            onChange={(e) => setCurrentValue(e.target.value)}
-          />
-          <button
-            onClick={() => {
-              handleInputSubmit(currentValue);
-              setCurrentValue(''); // Clear input field after submission
-            }}
-            style={{ padding: '10px', backgroundColor: '#4CAF50', color: 'white' }}
-          >
-            Send
-          </button>
-        </div>
-        
-      )}
+          {/* Render all previous responses as a chat */}
+          {responses.map((response, index) => (
+            <div key={index}>
+            
+              {response.type === "bubble"?(
+                <div className={style.bubbleDiv}>
+                <img src={profile} alt="botimg" className={style.botImg} />
+                <button className={style.bubbleStyle}>{response.answer}</button>
+                </div>
+                ):(
+                  <div className={style.inputDiv}>
+                  <button className={style.inputStyle}>{response.answer}</button></div>)}
 
-      {/* Show Thank You message only if form is completed */}
-      {formCompleted && (
-        <div style={{ marginTop: '20px' }}>
-          <h3>Thank you for filling out the form!</h3>
+            </div>
+          ))}
         </div>
-      )}
+
+        {/* Render the current field based on its type */}
+        {currentField.type === "bubble" ? (
+          <div>
+            <p>{currentField.label}</p>
+           
+            <p>{currentField.value}</p>
+          </div>
+        ) : (
+          <div className={style.inputContainer}>
+           
+            <input
+              type={currentField.inputType}
+              placeholder={`Enter your ${currentField.label.toLowerCase()}`}
+              value={currentValue}
+              onChange={(e) => setCurrentValue(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                handleInputSubmit(currentValue);
+                setCurrentValue(""); // Clear input field after submission
+              }}>
+              <img src={send} alt="sendimg" />
+            </button>
+          </div>
+        )}
+
+        {/* Show Thank You message only if form is completed */}
+        {formCompleted && (
+          <div className={style.thankyouDiv}>
+            <h3>Thank you for filling out the form!</h3>
+          </div>
+        )}
+      </div>
     </div>
-    </div>
+    // <div className={style.chatbotContainer}>
+    //   {/* <h2>{form.name}</h2> */}
+    //   <div className={style.chatbot_innerContainer}>
+    //     {/* Render all previous responses as a chat */}
+    //     {responses.map((response, index) => (
+    //       <div key={index} className={style.chatbot_response}>
+    //       {}
+    //       <div key={index} className={style.botBubble}>
+    //         <span>{response.type === 'bubble' ? '' : 'You'}: </span>
+    //         <p>{response.answer}</p>
+    //       </div>
+    //       </div>
+    //     ))}
+
+
+    //     {/* Render the current field based on its type */}
+    //     {currentField.type === 'bubble' ? (
+    //       <div>
+    //         <p>{currentField.label}</p>
+    //         {/* The field will automatically proceed without clicking */}
+    //         <p>{currentField.value}</p>
+    //       </div>
+    //     ) : (
+    //       <div className={style.userChat_content}>
+    //         {/* <label>{currentField.label}</label> */}
+    //         <input
+    //           type={currentField.inputType}
+    //           placeholder={`Enter your ${currentField.label.toLowerCase()}`}
+    //           value={currentValue}
+    //           onChange={(e) => setCurrentValue(e.target.value)}
+    //         />
+    //         <button
+    //           onClick={() => {
+    //             handleInputSubmit(currentValue);
+    //             setCurrentValue(''); // Clear input field after submission
+    //           }}
+    //         >
+    //         <img src={send} alt="send" />
+    //         </button>
+    //       </div>
+
+    //     )}
+
+    //     {/* Show Thank You message only if form is completed */}
+    //     {formCompleted && (
+    //       <div className={style.formbot_thakyou}>
+    //         <h3>Thank you for filling out the form!</h3>
+    //       </div>
+    //     )}
+    //   </div>
+    // </div>
   );
 };
 
