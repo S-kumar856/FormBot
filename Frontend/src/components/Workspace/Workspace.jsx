@@ -17,11 +17,14 @@ const Workspace = () => {
     const [formName, setFormName] = useState("");
     const [fId, setformId] = useState(null);
     const [showResponse, setShowResponse] = useState(true);
+    const [isFormSaved, setIsFormSaved] = useState(false);
 
     const { folderId, formId } = useParams();
 
     const apiUrl = import.meta.env.VITE_API_URI;
+    const FrontendUrl = import.meta.env.VITE_FRONTEND_URI;
 
+    console.log(FrontendUrl)
     // Fetch form data when the component mounts
     useEffect(() => {
         const fetchFormData = async () => {
@@ -47,12 +50,9 @@ const Workspace = () => {
                         setFormName("");
                         setFields([]);
                     }
-
-
                 }
             } catch (error) {
                 console.error("Error fetching form data:", error);
-                // toast.error("Error fetching form data");
 
             }
         };
@@ -122,6 +122,7 @@ const Workspace = () => {
 
                     setformId(response.data.formBot._id);
                     toast.success("Form Saved successfully!");
+                    setIsFormSaved(!isFormSaved);
 
                 }
             } catch (error) {
@@ -162,7 +163,7 @@ const Workspace = () => {
 
     // Handle generating a shareable link
     const shareForm = async () => {
-        console.log("hello");
+        console.log(fId);
         try {
             const response = await axios.post(
                 `${apiUrl}/api/forms/share/${fId}`,
@@ -172,20 +173,21 @@ const Workspace = () => {
             );
             console.log("Form link:", response.data.linkId);
             localStorage.setItem("linkId", response.data.linkId);
-            const link = `http://localhost:5173/chatbot/${response.data.linkId}`;
+            const link = `${FrontendUrl}/chatbot/${response.data.linkId}`;
             navigator.clipboard.writeText(link);
-            alert('Link copied to clipboard:' + link);
+            toast.success('Link copied to clipboard:' + link);
             
         } catch (error) {
             console.error("Error sharing form:", error);
+            toast.error("Error sharing form");
         }
     };
 
     // clearing formfield and navigate to formdashboard
     const handleCross = () => {
-        // setFields([])// Clear form fields
-        // setFormName(""); // Clear form name
-        navigate("/formdashboard"); // Navigate to FormDashboard
+        localStorage.removeItem("formId")
+        navigate("/formdashboard"); 
+        // Navigate to FormDashboard
 
     }
     const deleteField = (index) => {
@@ -221,7 +223,8 @@ const Workspace = () => {
                             <p>Dark</p>
                         </div>
                         <div className={style.Workspace_NavbarButton}>
-                            <button className={style.Workspace_shareBtn} onClick={shareForm}>Share</button>
+                       
+                            <button className={ isFormSaved?style.Workspace_shareBtn:style.Workspace_enableBtn} disabled={!isFormSaved} onClick={shareForm}>Share</button>
 
                             <button className={style.Workspace_saveBtn} onClick={saveForm}>Save</button>
                             <button className={style.Workspace_XBtn} onClick={handleCross}>x</button>

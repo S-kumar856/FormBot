@@ -1,99 +1,48 @@
-/* .container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
 
-/* DashboardReplica.module.css */
+.response {
+  flex: 1;
+  margin-right: 20px;
+  text-align: center;
+}
 
-.dashboardContainer {
-    background-color: #1e1e2f;
-    color: #fff;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .statsContainer {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .statBox {
-    background-color: #2a2a3d;
-    padding: 15px 20px;
-    border-radius: 8px;
-    text-align: center;
-  }
-  
-  .statBox p {
-    margin: 0;
-    font-size: 14px;
-    color: #c0c0c0;
-  }
-  
-  .statBox h2 {
-    margin: 5px 0 0;
-    font-size: 24px;
-    color: #fff;
-  }
-  
-  .dataTable {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #2a2a3d;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .dataTable th, .dataTable td {
-    padding: 10px 15px;
-    text-align: left;
-    border-bottom: 1px solid #444;
-  }
-  
-  .dataTable th {
-    background-color: #33334a;
-    color: #c0c0c0;
-  }
-  
-  .dataTable td {
-    color: #fff;
-  }
-  
-  .chartContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .donutChart {
-    width: 150px;
-    height: 150px;
-    background: conic-gradient(
-      #4caf50 0% 33%,
-      #555 33% 100%
-    );
-    border-radius: 50%;
-  }
-  
-  .completionStats {
-    text-align: center;
-  }
-  
-  .completionStats h3, .completionStats h2 {
-    margin: 5px 0;
-  }
-  
-  .completionStats h3 {
-    font-size: 18px;
-    color: #c0c0c0;
-  }
-  
-  .completionStats h2 {
-    font-size: 24px;
-    color: #fff;
-  }
+.chartSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.completionRate {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+
+.tableContainer {
+  margin: 30px 0;
+}
+
+.responsesTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.responsesTable th,
+.responsesTable td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+thead {
+  background-color: #333;
+  color: white;
+}
+
   
