@@ -22,9 +22,9 @@ const Workspace = () => {
     const { folderId, formId } = useParams();
 
     const apiUrl = import.meta.env.VITE_API_URI;
-    const FrontendUrl = import.meta.env.VITE_FRONTEND_URI;
+    const frontendUrl = import.meta.env.VITE_FRONTEND_URI;
 
-    console.log(FrontendUrl)
+    console.log(frontendUrl)
     // Fetch form data when the component mounts
     useEffect(() => {
         const fetchFormData = async () => {
@@ -173,7 +173,7 @@ const Workspace = () => {
             );
             console.log("Form link:", response.data.linkId);
             localStorage.setItem("linkId", response.data.linkId);
-            const link = `${FrontendUrl}/chatbot/${response.data.linkId}`;
+            const link = `${frontendUrl}/chatbot/${response.data.linkId}`;
             navigator.clipboard.writeText(link);
             toast.success('Link copied to clipboard:' + link);
             
