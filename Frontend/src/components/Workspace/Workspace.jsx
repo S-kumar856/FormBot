@@ -22,9 +22,42 @@ const Workspace = () => {
     const { folderId, formId } = useParams();
 
     const apiUrl = import.meta.env.VITE_API_URI;
-    const FrontendUrl = import.meta.env.VITE_FRONTEND_URI;
+    const frontendUrl = import.meta.env.VITE_FRONTEND_URI;
 
-    console.log(FrontendUrl)
+// Fetch form data when the component mounts
+useEffect(() => {
+    const fetchFormData = async () => {
+        try {
+            if (formId) {
+                const response = await axios.get(
+                    `${apiUrl}/api/forms/form/${formId}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        },
+                    }
+                );
+                if (response.data.success) {
+                    const form = response.data.form;
+
+                    setFormName(form.name); // Set form name
+                    setFields(form.fields); // Set the form fields (bubbles and inputs)
+                    setFormResponse([response.data.form]); // Set the form response data
+                } else {
+                    // Reset state if no formId exists
+                    setFormName("");
+                    setFields([]);
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching form data:", error);
+        }
+    };
+
+    fetchFormData();
+}, [formId, apiUrl]); // Only fetch data once when formId or apiUrl
+    console.log(frontendUrl)    
+
     // Fetch form data when the component mounts
     useEffect(() => {
         const fetchFormData = async () => {
@@ -173,7 +206,7 @@ const Workspace = () => {
             );
             console.log("Form link:", response.data.linkId);
             localStorage.setItem("linkId", response.data.linkId);
-            const link = `${FrontendUrl}/chatbot/${response.data.linkId}`;
+            const link = `${frontendUrl}/chatbot/${response.data.linkId}`;
             navigator.clipboard.writeText(link);
             toast.success('Link copied to clipboard:' + link);
             
