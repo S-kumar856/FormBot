@@ -11,6 +11,7 @@ const ChatbotForm = () => {
   const [currentFieldIndex, setCurrentFieldIndex] = useState(0);
   const [formCompleted, setFormCompleted] = useState(false);
   const [currentValue, setCurrentValue] = useState(''); // To store current input value
+  
   const apiUrl = import.meta.env.VITE_API_URI;
 
 
