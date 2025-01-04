@@ -23,7 +23,7 @@ const Workspace = () => {
 
     const apiUrl = import.meta.env.VITE_API_URI;
     const frontendUrl = import.meta.env.VITE_FRONTEND_URI;
-<<<<<<< HEAD
+
 
 // Fetch form data when the component mounts
 useEffect(() => {
@@ -59,10 +59,7 @@ useEffect(() => {
 }, [formId, apiUrl]); // Only fetch data once when formId or apiUrl
     console.log(frontendUrl)    
 
-=======
-
     console.log(frontendUrl)
->>>>>>> 12831abb6b709f5e4916322ef406a4d671c63284
     // Fetch form data when the component mounts
     useEffect(() => {
         const fetchFormData = async () => {
