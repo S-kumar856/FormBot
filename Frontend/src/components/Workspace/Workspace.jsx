@@ -23,6 +23,7 @@ const Workspace = () => {
 
     const apiUrl = import.meta.env.VITE_API_URI;
     const frontendUrl = import.meta.env.VITE_FRONTEND_URI;
+    console.log(frontendUrl)
 
 
 // Fetch form data when the component mounts
