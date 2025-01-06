@@ -18,49 +18,13 @@ const Workspace = () => {
     const [fId, setformId] = useState(null);
     const [showResponse, setShowResponse] = useState(true);
     const [isFormSaved, setIsFormSaved] = useState(false);
+    const [length, setLength] = useState(0);
 
     const { folderId, formId } = useParams();
 
     const apiUrl = import.meta.env.VITE_API_URI;
     const frontendUrl = import.meta.env.VITE_FRONTEND_URI;
-    console.log(frontendUrl)
 
-
-// Fetch form data when the component mounts
-useEffect(() => {
-    const fetchFormData = async () => {
-        try {
-            if (formId) {
-                const response = await axios.get(
-                    `${apiUrl}/api/forms/form/${formId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("token")}`,
-                        },
-                    }
-                );
-                if (response.data.success) {
-                    const form = response.data.form;
-
-                    setFormName(form.name); // Set form name
-                    setFields(form.fields); // Set the form fields (bubbles and inputs)
-                    setFormResponse([response.data.form]); // Set the form response data
-                } else {
-                    // Reset state if no formId exists
-                    setFormName("");
-                    setFields([]);
-                }
-            }
-        } catch (error) {
-            console.error("Error fetching form data:", error);
-        }
-    };
-
-    fetchFormData();
-}, [formId, apiUrl]); // Only fetch data once when formId or apiUrl
-    console.log(frontendUrl)    
-
-    console.log(frontendUrl)
     // Fetch form data when the component mounts
     useEffect(() => {
         const fetchFormData = async () => {
@@ -74,6 +38,8 @@ useEffect(() => {
                             },
                         }
                     );
+                    const formLength = response.data.form.fields;
+                    setLength(formLength.length)
                     if (response.data.success) {
                         const form = response.data.form;
 
@@ -129,10 +95,9 @@ useEffect(() => {
 
     // Handle saving the form data
     const saveForm = async () => {
-        console.log(fields.length);
-        if (formId) {  
-            console.log("save");
-
+        if (length > 0) {  
+             updateForm();
+        }else{
             try {
             
                 if (!folderId) {
@@ -165,11 +130,7 @@ useEffect(() => {
                 console.error("Error Saving form:", error);
                 toast.error("Error Saving form");
             }
-        } else {
-            updateForm();
-            console.log("update");
-
-        }
+        } 
     };
 
     // Handle saving the updated form data
